@@ -3,11 +3,18 @@
 
 ## R1: Identification of the problem you are trying to solve by building this particular app.
 
+The problem that needs solving with this API is that the Parnerships team likely has no way to properly track student progression (and if they do... well... enjoy another solution!) throughout the internship process. This means that not only are students and staff often left guessing as to a company's intentions along each step of the way, but so are companies left in the dark when it comes to staff and student decisions.
+
+By creating an API that allows all student, staff, and companies to view every step of the process and update their status the moment decisions are made, communication is not only swift but also extremely clear. This creates less room for interpretation and misunderstanding, thereby shortening the expendature of time for all parties involved.
 
 
 ## R2: Why is it a problem that needs solving?
 
+A company's efficiency can be measured by the time a team/team member spends on any given project/task. Software's job is to increase the efficiency of teams and their members, whatever the software or task may be. Zoom increases efficiency by creating a single point of communication for all members of a team. Microsoft Word allows users to create presentable documents using a variety of editing tools.
 
+What do these have in common? They all unite people or features that are spread across different platforms to come together and become more efficient. Why not have all team members message each other via text? Why not edit a single document across multiple different editors to achieve the final product? Because it's less efficient.
+
+Therefore the problem that needs solving is the efficiency of the organisation. Tools provide the solution to becoming more efficient, and this is simply another one of those tools.
 
 ## R3: Why have you chosen this database system. What are the drawbacks compared to others?
 
