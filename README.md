@@ -51,14 +51,14 @@ stmt = select(User).where(User.name.in_(["spongebob", "sandy"]))
 This command has an SQL equivalent, which is:
 
 ```
-SELECT * FROM user WHERE user.name IN ('spongebob', 'sandy');
+SELECT * FROM user WHERE name IN ('spongebob', 'sandy');
 ```
 
-You might be wondering why you would want to write the query in SQLAlchemy instead of standard SQL, which brings us to the benefits section.
+While the first statement might appear more complex (and indeed, it is), this is actually a benefit of an ORM. Compared to the second statement, the first is more expressive and explicit, with much more space for specification. This makes complex SQL queries simpler.
 
 ### Benefits
 
-- As previously mentioned, one large benefit of ORMs is that they allow us to write SQL queries in a language of our choice. This means that instead of having to switch between SQL and Python, one can simply write Python instead and not have to split their attention. This can appear unweildy, but once the syntax is learning it can be much faster than switching languages constantly. 
+- As previously seen, one large benefit of ORMs is that they allow us to write SQL queries in a language of our choice. This means that instead of having to switch between SQL and Python, one can simply write Python instead and not have to split their attention. This can appear unweildy, but once the syntax is learning it can be much faster than switching languages constantly. 
 
 This can greatly reduce the time developers spend interacting directly with the database, therefore speeding up productivity.
 Can write code in language of choice
