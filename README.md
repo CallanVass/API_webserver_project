@@ -132,7 +132,7 @@ Allows deletion of a single internship. For when the internship is over or offer
 
 ![An image of my API ERD](/imgs/API_ERD.png)
 
-In this ERD of my Partnerships API, you can see three entities and the attributes they are tracking. Crows foot notation dictates the cardinality of the relationships. As you can see, Users can have 0 or many Internships, but Internships can only have one user. This relationship is mimicked in that Companies can have 0 or many Internships, but Internships can only be assigned to one company.
+In this ERD of my Partnerships API, you can see three entities and the attributes they are tracking. Crows foot notation dictates the cardinality of the relationships. As you can see, Users can have 0 or many Internships, but Internships can only have one User. This relationship is mimicked in that Companies can have 0 or many Internships, but Internships can only be assigned to one Company.
 
 Here are the entities and their attributes in written form:
 
