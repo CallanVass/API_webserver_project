@@ -40,24 +40,38 @@ TODO: FIELDS TO PASS IN THE BODY
 - GET /users/
 View All Users
 
-Retrieves a list of all users. This route will only be accessible for the admin (both user and companies) to view, since students don't need access to view their peers or their internship status.
+Retrieves a list of all users. This route will only be accessible for the admin (both user and companies) to view, since students don't need access to view their peers or their internship status. Nested beneath the users should be a list/dict with their current internships
 
 - GET /users/user_id
 View One User
 
+Once again this route will only be accessible for the admin (both user and companies) to view for the same reasons. This will return the student along with their nested internships
+
 - PUT /users/user_id
 Update User Information
 
+This route allows user information to be updated. It's only accessible by the user admin, as companies don't need to alter user information.
+
+TODO: FIELDS TO PASS IN THE BODY
+
 - DELETE /users/user_id
 Delete One User
+
+Simply, this route deletes a user from the database, and therefore all listings. The user must have admin permissions. Companies cannot delete users.
 
 ### Companies
 
 - GET /companies/register
 Create New Company
 
+Allows accounts to be created for companies, however this is only possible for is_admin users. Companies cannot create new companies, it must be requested of the staff at Coder Academy. This also prevents anyone from creating a company account.
+
+TODO: FIELDS TO PASS IN THE BODY
+
 - POST /companies/login
 Company Login
+
+A route for companies to login to their accounts. Authenticates via JWT
 
 - GET /companies/
 View All Companies
