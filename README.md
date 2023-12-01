@@ -10,7 +10,7 @@ By creating an API that allows all student, staff, and companies to view every s
 
 ## R2: Why is it a problem that needs solving?
 
-A company's efficiency can be measured by the time a team/team member spends on any given project/task. Software's job is to increase the efficiency of teams and their members, whatever the software or task may be. Zoom increases efficiency by creating a single point of communication for all members of a team. Microsoft Word allows users to create presentable documents using a variety of editing tools.
+A company's efficiency can be measured by the time a team/team member spends on any given project/task. Software's job is to increase the efficiency of teams and their members, whatever the software or task may be. Zoom increases efficiency by creating a single point of communication for all members of a team. Microsoft Word allows users to create presentable documents using a variety of editing tools compiled into the one editor.
 
 What do these have in common? They all unite people or features that are spread across different platforms to come together and become more efficient. Why not have all team members message each other via text? Why not edit a single document across multiple different editors to achieve the final product? Because it's less efficient.
 
@@ -18,17 +18,57 @@ Therefore the problem that needs solving is the efficiency of the organisation. 
 
 ## R3: Why have you chosen this database system. What are the drawbacks compared to others?
 
+Familiarity does play a part in my selection, but so does compatibility, online documentation, and flexibility.
 
+#### Compatibility
+
+- PostgreSQL is used widely within the tech industry, and is largely known for its compatibility with other softwares and libraries. It also has many GUI tools built for it such as pgAdmin, DBeaver, DataGrip, and OmniDB. GUI tools can reduce the time spent interacting with the database.
+
+#### Documentation
+
+-Online there can be found large volumes of documentation about PostgreSQL, much of it via the [PostgreSQL website itself](https://www.postgresql.org/docs/). Aside from official documentation, there are millions of posts online to help speed up troubleshooting.
+
+#### Flexibility
+
+- PostgreSQL has been developed to run on the following operating systems: Linux, Windows, FreeBSD, OpenBSD, NetBSD, DragonFlyBSD, macOS, AIX, Solaris, and illumos. This covers the vast majority of all OS, which allows co-working developers around the world to download PostgreSQL as their DBMS.
+
+#### Drawbacks
+
+- Compared to many other DBMS (Database Management Systems), PostgreSQL isn't the quickest. It's priority of compatibility over efficiency means it runs slower than DBMS such as Cassandra or MongoDB. Also, customer support is only available commercially, and even then it has a price as the support is actually a professional service provider.
+Lastly, not all open source applications support PostgreSQL. They may run a DBMS such as MySQL or NoSQL instead.
 
 ## R4: Identify and discuss the key functionalities and benefits of an ORM
 
+### Functionality
+
+- An ORM (Object Relational Mapper) provides a way for OOP (Object Oriented Programming) to interact with a database. It removes the gap between OOP and SQL (Structured Query Language), in its place creating a mapping that allows a developer to query the database through the ORM instead of manually writing SQL queries.
+There are many ORMs (at the very least one for most any programming language). One such example is SQLAlchemy, which is an ORM for the Python programming language. With SQLAlchemy, one can query a DBMS (such as PostgreSQL!) using a command as such:
+
+```
+stmt = select(User).where(User.name.in_(["spongebob", "sandy"]))
+```
+
+This command has an SQL equivalent, which is:
+
+```
+SELECT * FROM user WHERE user.name IN ('spongebob', 'sandy');
+```
+
+You might be wondering why you would want to write the query in SQLAlchemy instead of standard SQL, which brings us to the benefits section.
+
+### Benefits
+
+- As previously mentioned, one large benefit of ORMs is that they allow us to write SQL queries in a language of our choice. This means that instead of having to switch between SQL and Python, one can simply write Python instead and not have to split their attention. This can appear unweildy, but once the syntax is learning it can be much faster than switching languages constantly. 
+
+This can greatly reduce the time developers spend interacting directly with the database, therefore speeding up productivity.
+Can write code in language of choice
 
 
 ## R5: Document all endpoints for your API
 
 Endpoints have been organised by Entities (Users, Companies, Internships)
 
-### Users
+#### Users
 
 - GET /users/register
 Create New User
@@ -66,7 +106,7 @@ Delete One User
 
 *Simply, this route deletes a user from the database, and therefore all listings. The user must have admin permissions. Companies cannot delete users.*
 
-### Companies
+#### Companies
 
 - GET /companies/register
 Create New Company
@@ -104,7 +144,7 @@ Delete One Company
 
 TODO: FIELDS TO PASS IN THE BODY
 
-### Internships
+#### Internships
 
 - POST /internships/create
 Create Internship
@@ -168,6 +208,6 @@ Internships((PK)company_id, status, date_created, (FK)user_id, (FK)company_id)
 
 ## R10: Describe the way tasks are allocated and tracked in your project
 
-Tasks are allocated via GitHub Projects, which acts like a progress board (think Trello) for developers to take tickets from the board in various states of urgency. Tickets are assigned a level of importance, and from there developers can move tickets accross the columns (TODO, In Progress, Done). For larger projects, a more developed system would be beneficial. Something like Trello would allow states to be tracked easier.
+Tasks are allocated via GitHub Projects, which acts like a progress board (think Trello) for developers to take tickets from the board in various states of urgency. Tickets are assigned a level of importance, and from there developers can move tickets accross the columns (TODO, In Progress, Done). For larger projects, a more developed system would be beneficial. Something like Trello would allow states to be tracked easier, and has more features overall.
 
 Allocation isn't something I have to worry about as this is a solo project, however tickets on the board can be allocated to users on the project by clicking the ticket and manually allocating them. This brings up the developer's profile picture next to the ticket, allowing for easy identification.
