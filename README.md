@@ -54,14 +54,16 @@ This command has an SQL equivalent, which is:
 SELECT * FROM user WHERE name IN ('spongebob', 'sandy');
 ```
 
-While the first statement might appear more complex (and indeed, it is), this is actually a benefit of an ORM. Compared to the second statement, the first is more expressive and explicit, with much more space for specification. This makes complex SQL queries simpler.
+While the first statement might appear more complex (and indeed, it is), this is actually a benefit of an ORM. Compared to the second statement, the first is more expressive and explicit, with much more space for specification.
 
 ### Benefits
 
-- As previously seen, one large benefit of ORMs is that they allow us to write SQL queries in a language of our choice. This means that instead of having to switch between SQL and Python, one can simply write Python instead and not have to split their attention. This can appear unweildy, but once the syntax is learning it can be much faster than switching languages constantly. 
+- As previously seen, one large benefit of ORMs is that they allow us to write SQL queries in a language of our choice. This means that instead of having to switch between SQL and Python, one can simply write Python instead and not have to split their attention. This can appear unweildy, but once the syntax is learned it can be much faster than switching languages constantly. This can greatly reduce the time developers spend interacting directly with the database, therefore speeding up productivity.
 
-This can greatly reduce the time developers spend interacting directly with the database, therefore speeding up productivity.
-Can write code in language of choice
+- Speaking of productivity: the queries that are translated and written by the ORM from your programming language to SQL are likely to be more effective than if you wrote them yourself. Any error will likely be discovered on the command line long before the ORM translates your code into a query, meaning that it's much harder to devise incorrect queries.
+
+- ORMs such as SQLAlchemy help protect against SQL injections by parameterizing, escaping, and quoting the data before querying the database with it. Therefore if there is any malicious SQL it becomes harmless. This process is known as data sanatisation.
+
 
 
 ## R5: Document all endpoints for your API
@@ -194,7 +196,15 @@ Internships((PK)company_id, status, date_created, (FK)user_id, (FK)company_id)
 
 ## R7: Detail any third party services that your app will use
 
+- Bcrypt
 
+- SQLAlchemy
+
+- Psycopg2
+
+- Marshmallow
+
+- Flask-JWT-Extended
 
 ## R8: Describe your projects models in terms of the relationships they have with each other
 
