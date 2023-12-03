@@ -196,15 +196,39 @@ Internships((PK)company_id, status, date_created, (FK)user_id, (FK)company_id)
 
 ## R7: Detail any third party services that your app will use
 
-- Bcrypt
+- **Bcrypt**
 
-- SQLAlchemy
+Flask-Bcrypt is an extension of Bcrypt that gives us hashing capabilities to further protect sensitive information in our API. This information could be anything from passwords to access keys.
 
-- Psycopg2
+Hashing is the process of running a piece of information (usually a password or key) through a hashing algorithm. This algorithm turns the information into a string of characters and numbers completely different from the original string. We will use this to store passwords in our database, which will in turn stop anyone (even admins!) from reading them.
 
-- Marshmallow
+- **SQLAlchemy**
 
-- Flask-JWT-Extended
+As previously mentioned, SQLAlchemy is an ORM, but it's also a Python SQL tolkit. It's designed to help us access the database by creating Models (pre-made classes) that allow us to create tables in our chosen DBMS (PostgreSQL). Within these Models, we can specify columns to be made as well as relationships to other tables within our database. 
+
+Note: We will also be using the module Flask-SQLAlchemy, which is an extension that allows more specific support for Flask within the original extension. 
+
+- **Psycopg2**
+
+Psycopg2 acts like an adapter to connect our database with our application. By specifying our connection string in the .flaskenv file, we're able to establish a connection between PostgreSQL and psycopg2 (our app).
+
+This also gives us a better way to interact with our database via Python instead of SQL, however much of this isn't used in this application due to the overlap between Pyscopg2 and SQLAlchemy's way of interacting with the database.
+
+- **Marshmallow**
+
+Marshmallow-SQLAlchemy is a (de)serialization library that allows us to recieve and output data into the required form. This can mean serialization, which is converting SQLAlchemy models into JSON. It can also mean deserialization, which is converting incoming JSON data back into Marshmallow Schemas. 
+
+Marshmallow Schemas allow us to specify the fields we wish to be (de)serialized. These should correspond with our SQLAlchemy Model columns. They also allow us to specify nested fields we wish to display, allowing us to display more than one Model when serializing data.
+
+- **Flask-JWT-Extended**
+
+Flask-JWT-Extended allows us to create JWT (JSON Web Token) access tokens for individual session usage, limit access by requiring a token from a user (e.g user must be signed in), or retrieve the JWT identity within a protected route.
+
+By confirming a JWT token exists within the authorization header, we add an extra layer of security to our API which dictates that only specified users can view/update/delete certain endpoints.
+
+**Python-dotenv**
+
+Used to ou
 
 ## R8: Describe your projects models in terms of the relationships they have with each other
 
