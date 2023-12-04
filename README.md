@@ -230,6 +230,10 @@ By confirming a JWT token exists within the authorization header, we add an extr
 
 This lets us reference .env files and set them as global variables. It reads the file as key-value pairs and sets the key to the variable name and the value to the key's content. More specifically, we use this to reference a .gitignored file called .flaskenv that contains our JWT Key and our Connection String so that we don't push sensitive information to our GitHub, but rather store it locally.
 
+- **PostgreSQL**
+
+PostgreSQL is an open source database management system for relational databases with a huge amount of compatability with various Frameworks and operating systems.
+
 ## R8: Describe your projects models in terms of the relationships they have with each other
 
 There are three Models in this project: Users, Companies, and Internships. 
@@ -244,6 +248,8 @@ Nested Models: Internship attibute id, status.
 
 Users((PK)user_id, name, email, password, is_admin)
 
+TODO: Screenshots of MODEL
+
 **Companies**
 
 The Companies Model will relate to the Internships Model alonside the user_id with its own foreign key of company_id, as an Internship obviously has to be related to a company. This will back populate the company using the the Internships Model.
@@ -254,9 +260,11 @@ Nested Models: Internships attibute id, position_type, status.
 
 Companies((PK)company_id, name, email, ph_number, password, is_admin)
 
+TODO: Screenshots of MODEL
+
 **Internships**
 
-Unlike either the Users or Companies Models, the Internships Model relates back to each Model in the ERD. This is because it contains both the user_id and the company_id foreign keys, as there can be no Internship without a user (student) and a company.
+Unlike either the Users or Companies Models, the Internships Model relates back to each Entity in the ERD. This is because it contains both the user_id and the company_id foreign keys, as there can be no Internship without a user (student) and a company.
 
 Relationships: Companies = Many-To-One. Users = Many-To-One.
 
@@ -264,9 +272,15 @@ Nested Models: Users attibute name. Companies attribute name.
 
 Internships((PK)company_id, status, date_created, position_type, (FK)user_id, (FK)company_id)
 
+TODO: Screenshots of MODEL
+
 ## R9: Discuss the database relations to be implemented in your application
 
+To begin with I will create a database called "Partnerships" using PostgreSQL. From there I will create the tables Users, Companies, and Internships. These tables all consist of a primary key which will be used for identification. (E.G Users primary key is user_id, even when referenced in another table).
 
+Since it's a relational database, we need a way to *relate* tables to one another. This is done by the use of foregin keys within the tables themselves whenever a connection is established between two tables. For instance, the Internships table has two foreign keys: user_id and company_id. The definition of these keys establishes the relationship within the database. However it's to be noted that not every table relates to every other table. Users doesn't relate to Companies, and vice versa. Their only connection is through the Internships table.
+
+Although tables are created at the API (Flask) level, they must still relate on a database level. Luckily, SQLAlchemy gives us a way to create the connections so that they exist on a database level while still being accessible via Flask.
 
 ## R10: Describe the way tasks are allocated and tracked in your project
 
