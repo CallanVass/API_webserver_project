@@ -1,6 +1,19 @@
 # API_webserver_project
 
 
+# Table of Contents
+
+# Table of Contents
+
+
+2. [R1](#exa)
+
+
+
+
+
+
+<a id="R1"></a>
 ## R1: Identification of the problem you are trying to solve by building this particular app.
 
 The problem that needs solving with this API is that the Parnerships team likely has no way to properly track student progression (and if they do... well... enjoy another solution!) throughout the internship process. This means that not only are students and staff often left guessing as to a company's intentions along each step of the way, but so are companies left in the dark when it comes to staff and student decisions.
@@ -280,7 +293,7 @@ To begin with I will create a database called "Partnerships" using PostgreSQL. F
 
 Since it's a relational database, we need a way to *relate* tables to one another. This is done by the use of foregin keys within the tables themselves whenever a connection is established between two tables. For instance, the Internships table has two foreign keys: user_id and company_id. The definition of these keys establishes the relationship within the database. However it's to be noted that not every table relates to every other table. Users doesn't relate to Companies, and vice versa. Their only connection is through the Internships table.
 
-Although tables are created at the API (Flask) level, they must still relate on a database level. Luckily, SQLAlchemy gives us a way to create the connections so that they exist on a database level while still being accessible via Flask.
+Although tables are created at the API (Flask) level, they exist on a database level. Luckily, SQLAlchemy gives us a way to create the connections that are accessible and mutable via Flask.
 
 ## R10: Describe the way tasks are allocated and tracked in your project
 
