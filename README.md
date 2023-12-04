@@ -192,7 +192,7 @@ Users((PK)user_id, name, email, password, is_admin)
 
 Companies((PK)company_id, name, email, ph_number, password, is_admin)
 
-Internships((PK)company_id, status, date_created, (FK)user_id, (FK)company_id)
+Internships((PK)company_id, status, date_created, position_type, (FK)user_id, (FK)company_id)
 
 ## R7: Detail any third party services that your app will use
 
@@ -226,17 +226,45 @@ Flask-JWT-Extended allows us to create JWT (JSON Web Token) access tokens for in
 
 By confirming a JWT token exists within the authorization header, we add an extra layer of security to our API which dictates that only specified users can view/update/delete certain endpoints.
 
-**Python-dotenv**
+- **Python-dotenv**
 
-Used to ou
+This lets us reference .env files and set them as global variables. It reads the file as key-value pairs and sets the key to the variable name and the value to the key's content. More specifically, we use this to reference a .gitignored file called .flaskenv that contains our JWT Key and our Connection String so that we don't push sensitive information to our GitHub, but rather store it locally.
 
 ## R8: Describe your projects models in terms of the relationships they have with each other
 
+There are three Models in this project: Users, Companies, and Internships. 
 
+**Users**
 
+The Users Model will relate to the Internships Model with a foreign key of user_id, as the Internships Model will need to have a User associated with it for identification purposes. This will back populate the user using the Internships Model.
+
+Relationships: Internships = One-To-Many. Companies = None.
+
+Nested Models: Internship attibute id, status.
+
+Users((PK)user_id, name, email, password, is_admin)
+
+**Companies**
+
+The Companies Model will relate to the Internships Model alonside the user_id with its own foreign key of company_id, as an Internship obviously has to be related to a company. This will back populate the company using the the Internships Model.
+
+Relationships: Internships = One-To-Many. Users = None.
+
+Nested Models: Internships attibute id, position_type, status. 
+
+Companies((PK)company_id, name, email, ph_number, password, is_admin)
+
+**Internships**
+
+Unlike either the Users or Companies Models, the Internships Model relates back to each Model in the ERD. This is because it contains both the user_id and the company_id foreign keys, as there can be no Internship without a user (student) and a company.
+
+Relationships: Companies = Many-To-One. Users = Many-To-One.
+
+Nested Models: Users attibute name. Companies attribute name. 
+
+Internships((PK)company_id, status, date_created, position_type, (FK)user_id, (FK)company_id)
 
 ## R9: Discuss the database relations to be implemented in your application
-
 
 
 
