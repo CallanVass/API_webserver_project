@@ -3,10 +3,16 @@
 
 # Table of Contents
 
-# Table of Contents
-
-
-2. [R1](#R1)
+1. [R1: Identification of the problem you are trying to solve by building this particular app.](#R1)
+2. [R2: Why is it a problem that needs solving?](#R2)
+3. [R3: Why have you chosen this database system. What are the drawbacks compared to others?](#R3)
+4. [R4: Identify and discuss the key functionalities and benefits of an ORM](#R4)
+5. [R5: Document all endpoints for your API](#R5)
+6. [R6: An ERD for your app](#R6)
+7. [R7: Detail any third party services that your app will use](#R7)
+8. [R8: Describe your projects models in terms of the relationships they have with each other](#R8)
+9. [R9: Discuss the database relations to be implemented in your application](#R9)
+10. [R10: Describe the way tasks are allocated and tracked in your project](#R10)
 
 
 
@@ -20,7 +26,7 @@ The problem that needs solving with this API is that the Parnerships team likely
 
 By creating an API that allows all student, staff, and companies to view every step of the process and update their status the moment decisions are made, communication is not only swift but also extremely clear. This creates less room for interpretation and misunderstanding, thereby shortening the expendature of time for all parties involved.
 
-
+<a id="R2"></a>
 ## R2: Why is it a problem that needs solving?
 
 A company's efficiency can be measured by the time a team/team member spends on any given project/task. Software's job is to increase the efficiency of teams and their members, whatever the software or task may be. Zoom increases efficiency by creating a single point of communication for all members of a team. Microsoft Word allows users to create presentable documents using a variety of editing tools compiled into the one editor.
@@ -28,7 +34,7 @@ A company's efficiency can be measured by the time a team/team member spends on 
 What do these have in common? They all unite people or features that are spread across different platforms to come together and become more efficient. Why not have all team members message each other via text? Why not edit a single document across multiple different editors to achieve the final product? Because it's less efficient.
 
 Therefore the problem that needs solving is the efficiency of the organisation. Tools provide the solution to becoming more efficient, and this is simply another one of those tools.
-
+<a id="R3"></a>
 ## R3: Why have you chosen this database system. What are the drawbacks compared to others?
 
 Familiarity does play a part in my selection, but so does compatibility, online documentation, and flexibility.
@@ -49,7 +55,7 @@ Familiarity does play a part in my selection, but so does compatibility, online 
 
 - Compared to many other DBMS (Database Management Systems), PostgreSQL isn't the quickest. It's priority of compatibility over efficiency means it runs slower than DBMS such as Cassandra or MongoDB. Also, customer support is only available commercially, and even then it has a price as the support is actually a professional service provider.
 Lastly, not all open source applications support PostgreSQL. They may run a DBMS such as MySQL or NoSQL instead.
-
+<a id="R4"></a>
 ## R4: Identify and discuss the key functionalities and benefits of an ORM
 
 ### Functionality
@@ -78,7 +84,7 @@ While the first statement might appear more complex (and indeed, it is), this is
 - ORMs such as SQLAlchemy help protect against SQL injections by parameterizing, escaping, and quoting the data before querying the database with it. Therefore if there is any malicious SQL it becomes harmless. This process is known as data sanatisation.
 
 
-
+<a id="R5"></a>
 ## R5: Document all endpoints for your API
 
 Endpoints have been organised by Entities (Users, Companies, Internships)
@@ -189,7 +195,7 @@ TODO: FIELDS TO PASS IN THE BODY
 Delete One Internship
 
 Allows deletion of a single internship. For when the internship is over or offer has been rejected by either party.
-
+<a id="R6"></a>
 ## R6: An ERD for your app
 
 ![An image of my API ERD](/imgs/API_ERD.png)
@@ -206,7 +212,7 @@ Users((PK)user_id, name, email, password, is_admin)
 Companies((PK)company_id, name, email, ph_number, password, is_admin)
 
 Internships((PK)company_id, status, date_created, position_type, (FK)user_id, (FK)company_id)
-
+<a id="R7"></a>
 ## R7: Detail any third party services that your app will use
 
 - **Bcrypt**
@@ -246,7 +252,7 @@ This lets us reference .env files and set them as global variables. It reads the
 - **PostgreSQL**
 
 PostgreSQL is an open source database management system for relational databases with a huge amount of compatability with various Frameworks and operating systems.
-
+<a id="R8"></a>
 ## R8: Describe your projects models in terms of the relationships they have with each other
 
 There are three Models in this project: Users, Companies, and Internships. 
@@ -286,7 +292,7 @@ Nested Models: Users attibute name. Companies attribute name.
 Internships((PK)company_id, status, date_created, position_type, (FK)user_id, (FK)company_id)
 
 TODO: Screenshots of MODEL
-
+<a id="R9"></a>
 ## R9: Discuss the database relations to be implemented in your application
 
 To begin with I will create a database called "Partnerships" using PostgreSQL. From there I will create the tables Users, Companies, and Internships. These tables all consist of a primary key which will be used for identification. (E.G Users primary key is user_id, even when referenced in another table).
@@ -294,7 +300,7 @@ To begin with I will create a database called "Partnerships" using PostgreSQL. F
 Since it's a relational database, we need a way to *relate* tables to one another. This is done by the use of foregin keys within the tables themselves whenever a connection is established between two tables. For instance, the Internships table has two foreign keys: user_id and company_id. The definition of these keys establishes the relationship within the database. However it's to be noted that not every table relates to every other table. Users doesn't relate to Companies, and vice versa. Their only connection is through the Internships table.
 
 Although tables are created at the API (Flask) level, they exist on a database level. Luckily, SQLAlchemy gives us a way to create the connections that are accessible and mutable via Flask.
-
+<a id="R10"></a>
 ## R10: Describe the way tasks are allocated and tracked in your project
 
 Tasks are allocated via GitHub Projects, which acts like a progress board (think Trello) for developers to take tickets from the board in various states of urgency. Tickets are assigned a level of importance, and from there developers can move tickets accross the columns (TODO, In Progress, Done). For larger projects, a more developed system would be beneficial. Something like Trello would allow states to be tracked easier, and has more features overall.
