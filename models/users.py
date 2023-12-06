@@ -1,4 +1,5 @@
 from setup import db, ma
+from marshmallow import fields
 
 # Create User Model
 class User(db.Model):
@@ -14,11 +15,14 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
 
     # Other side of the relationship between Internship and Company
-    internship_id = db.relationship("Internship", back_populates="users")
+    internships = db.relationship("Internship", back_populates="users")
 
 
 class UserSchema(ma.Schema):
-    #Insert nested fields and extclude the relevant ones
+
+    # Nesting Schema under Internship upon serialization 
+    internships = fields.Nested("InternshipSchema", only=["id", "status", "position_type"], many=True)
+
     # Pass in accepted fields to the schema (for (de)serialization)
     class Meta:
-        fields = ("id", "name", "email", "password", "is_admin")
+        fields = ("id", "name", "email", "password", "is_admin", "internships")

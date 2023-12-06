@@ -34,4 +34,4 @@ class UserSchema(ma.Schema):
 
     # Pass in accepted fields to the schema (for (de)serialization)
     class Meta:
-        fields = ("id", "status", "date_created", "position_type")
+        fields = ("id", "status", "date_created", "position_type", "company", "user")
