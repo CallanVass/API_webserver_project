@@ -18,7 +18,7 @@ class Company(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
 
     # Other side of the relationship between Internship and Company
-    internships = db.relationship("Internship", back_populates="companies", many=True)
+    internships = db.relationship("Internship", back_populates="companies")
 
 class CompanySchema(ma.Schema):
 

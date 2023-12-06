@@ -1,5 +1,10 @@
 from setup import db, ma
 from marshmallow import fields
+from marshmallow.validate import OneOf
+from datetime import datetime
+
+VALID_STATUSES = ("Company Interested", "Student Interview Pending" , "Student Declined Interview" "Company Offered Position", "Student Accepted Offer", "Student Declined Offer", "Student Offered Employment", "Student Completed Internship")
+VALID_POSITIONS = ("Front-end", "Back-end", "Full-stack")
 
 # Create User Model
 class Internship(db.Model):
@@ -12,7 +17,7 @@ class Internship(db.Model):
 
     # Table Entities
     status = db.Column(db.String, nullable=False)
-    date_created = db.Column(db.Date, nullable=False)
+    date_created = db.Column(db.Date(), default=datetime.now().strftime("%Y-%m-%d"))
     position_type = db.Column(db.String, nullable=False)
 
     # Foreign Keys (user_id & company_id)
@@ -31,6 +36,8 @@ class UserSchema(ma.Schema):
     # Nesting Schema under Internship upon serialization 
     user = fields.Nested("UserSchema", only=["id", "name"])
     company = fields.Nested("CompanySchema", only=["id", "name"])
+    status = fields.String(validate=OneOf(VALID_STATUSES))
+    position_type = fields.String(validate=OneOf(VALID_POSITIONS))
 
     # Pass in accepted fields to the schema (for (de)serialization)
     class Meta:
