@@ -39,7 +39,7 @@ def register():
     except IntegrityError:
         return {"error": "Email address already in use"}, 409
 
-
+# Login Route
 @users_bp.route("/login", methods=["POST"])
 def login():
 
@@ -64,7 +64,7 @@ def login():
         return {"error": "Invalid email or password"}, 401
 
 
-# Get all users
+# Get all users Route
 @users_bp.route("/")
 @jwt_required()  # Specifying you need a jwt access token to access page
 def all_users():
