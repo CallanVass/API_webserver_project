@@ -15,7 +15,7 @@ class Company(db.Model):
     email = db.Column(db.String, nullable=False, unique=True)
     ph_number = db.Column(db.Integer)
     password = db.Column(db.String, nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)
+    is_admin = db.Column(db.Boolean, default=True)
 
     # Other side of the relationship between Internship and Company
     internships = db.relationship("Internship", back_populates="companies")

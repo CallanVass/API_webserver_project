@@ -11,28 +11,33 @@ db_commands = Blueprint("db", __name__)
 # Cli command to drop (delete) and create all tables
 @db_commands.cli.command("create")
 def db_create():
+
     # Drop table
     db.drop_all()
+
     # Create table
     db.create_all()
-    print("Created tables")
+
+    # Printing Created Tables to ensure everything has worked as intended
+    print("Created Tables")
 
 
 # Cli command to seed the database with users, companies, and internships
-db_commands.cli.command("seed")
+@db_commands.cli.command("seed")
 def db_seed():
     # Creating users for the database
     users = [
         User(
-            email="admin@spam.com",
-            password=bcrypt.generate_password_hash("spam").decode("utf-8"),
-            is_admin=True
+            name = "Sarah",
+            email = "admin@spam.com",
+            password = bcrypt.generate_password_hash("spam").decode("utf-8"),
+            is_admin = True
         ),
         User(
-            name="John",
-            email="john@spam.com",
-            password=bcrypt.generate_password_hash("tisbutascratch").decode("utf-8"),
-            is_admin=False
+            name ="John",
+            email ="john@spam.com",
+            password = bcrypt.generate_password_hash("tisbutascratch").decode("utf-8"),
+            is_admin = False
         )
 
     ]
@@ -46,23 +51,20 @@ def db_seed():
     Company(
         name = "Meta",
         email = "meta@example.com",
-        password=bcrypt.generate_password_hash("spam").decode("utf-8"),
+        password = bcrypt.generate_password_hash("spam").decode("utf-8"),
         ph_number = "0412345678",
-        is_admin = False
     ),
     Company(
         name = "Zyrtex LTD",
         email = "zyrtex@gmail.com",
-        password=bcrypt.generate_password_hash("spam").decode("utf-8"),
+        password = bcrypt.generate_password_hash("spam").decode("utf-8"),
         ph_number = "0412345678",
-        is_admin = False
     ),
     Company(
         name = "Reddit",
         email = "reddit@reddit.com",
-        password=bcrypt.generate_password_hash("spam").decode("utf-8"),
+        password = bcrypt.generate_password_hash("spam").decode("utf-8"),
         ph_number = "0412345678",
-        is_admin = False
     )
     ]
     
@@ -72,31 +74,33 @@ def db_seed():
     db.session.commit()
     
     # Creating internships for the database
-    internships = [
-        Internship(
-            status = "Company Interested",
-            date_created = date.today(),
-            position_type = "Front-end",
-            user_id = 1,
-            company_id = 1
-        ),
-        Internship(
-            status = "Student Interview Pending",
-            date_created = date.today(),
-            position_type = "Front-end",
-            user_id = 1,
-            company_id = 1
-        ),
-        Internship(
-            status = "Student Declined Interview",
-            date_created = date.today(),
-            position_type = "Front-end",
-            user_id = 1,
-            company_id = 1
-        ),
-    ]
+    # internships = [
+    #     Internship(
+    #         status = "Company Interested",
+    #         date_created = date.today(),
+    #         position_type = "Front-end",
+    #         user_id = 1,
+    #         company_id = 1
+    #     ),
+    #     Internship(
+    #         status = "Student Interview Pending",
+    #         date_created = date.today(),
+    #         position_type = "Front-end",
+    #         user_id = 1,
+    #         company_id = 1
+    #     ),
+    #     Internship(
+    #         status = "Student Declined Interview",
+    #         date_created = date.today(),
+    #         position_type = "Front-end",
+    # #         user_id = 1,
+    # #         company_id = 1
+    # #     ),
+    
 
-    # Adding and commiting all internships to the database
-    db.session.add_all(internships)
-    db.session.commit()
+    # # Adding and commiting all internships to the database
+    # db.session.add_all(internships)
+    # db.session.commit()
+
+    # Printing Database Seeded to ensure everything has worked as intended
     print("Database Seeded")

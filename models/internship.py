@@ -24,14 +24,14 @@ class Internship(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     # db.relationship defines a relationship between User and Internship
-    user = db.relationship("User", back_populates="internships")
+    users = db.relationship("User", back_populates="internships")
 
     company_id = db.Column(db.Integer, db.ForeignKey("companies.id"), nullable=False)
 
     # db.relationship defines a relationship between User and Company
-    company = db.relationship("Company", back_populates="comments")
+    companies = db.relationship("Company", back_populates="internships")
 
-class UserSchema(ma.Schema):
+class InternshipSchema(ma.Schema):
 
     # Nesting Schema under Internship upon serialization 
     user = fields.Nested("UserSchema", only=["id", "name"])
