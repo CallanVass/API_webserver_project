@@ -34,11 +34,11 @@ class Internship(db.Model):
 class InternshipSchema(ma.Schema):
 
     # Nesting Schema under Internship upon serialization 
-    user = fields.Nested("UserSchema", only=["id", "name"])
-    company = fields.Nested("CompanySchema", only=["id", "name"])
+    users = fields.Nested("UserSchema", only=["id", "name"])
+    companies = fields.Nested("CompanySchema", only=["id", "name"])
     status = fields.String(validate=OneOf(VALID_STATUSES))
     position_type = fields.String(validate=OneOf(VALID_POSITIONS))
 
     # Pass in accepted fields to the schema (for (de)serialization)
     class Meta:
-        fields = ("id", "status", "date_created", "position_type", "company", "user")
+        fields = ("id", "status", "date_created", "position_type", "companies", "users")

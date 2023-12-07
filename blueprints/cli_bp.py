@@ -74,33 +74,33 @@ def db_seed():
     db.session.commit()
     
     # Creating internships for the database
-    # internships = [
-    #     Internship(
-    #         status = "Company Interested",
-    #         date_created = date.today(),
-    #         position_type = "Front-end",
-    #         user_id = 1,
-    #         company_id = 1
-    #     ),
-    #     Internship(
-    #         status = "Student Interview Pending",
-    #         date_created = date.today(),
-    #         position_type = "Front-end",
-    #         user_id = 1,
-    #         company_id = 1
-    #     ),
-    #     Internship(
-    #         status = "Student Declined Interview",
-    #         date_created = date.today(),
-    #         position_type = "Front-end",
-    # #         user_id = 1,
-    # #         company_id = 1
-    # #     ),
-    
+    internships = [
+        Internship(
+            status = "Company Interested",
+            date_created = date.today(),
+            position_type = "Front-end",
+            user_id = 1,
+            company_id = 1
+        ),
+        Internship(
+            status = "Student Interview Pending",
+            date_created = date.today(),
+            position_type = "Front-end",
+            user_id = 1,
+            company_id = 1
+        ),
+        Internship(
+            status = "Student Declined Interview",
+            date_created = date.today(),
+            position_type = "Front-end",
+            user_id = 1,
+            company_id = 1
+        ),
+    ]
 
-    # # Adding and commiting all internships to the database
-    # db.session.add_all(internships)
-    # db.session.commit()
+    # Adding and commiting all internships to the database
+    db.session.add_all(internships)
+    db.session.commit()
 
     # Printing Database Seeded to ensure everything has worked as intended
     print("Database Seeded")

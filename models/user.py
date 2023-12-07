@@ -21,7 +21,7 @@ class User(db.Model):
 class UserSchema(ma.Schema):
 
     # Nesting Schema under Internship upon serialization 
-    internships = fields.Nested("InternshipSchema", only=["id", "status", "position_type"], many=True)
+    internships = fields.Nested("InternshipSchema", many=True, exclude=["users"])
 
     # Pass in accepted fields to the schema (for (de)serialization)
     class Meta:

@@ -72,3 +72,49 @@ def all_users():
     stmt = db.select(User)
     users = db.session.scalars(stmt).all()
     return UserSchema(many=True, exclude=["password"]).dump(users)
+
+
+# Get one user Route
+@users_bp.route("/<int:user_id>")
+@jwt_required()
+def get_user(user_id):
+    authorize()
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if user:
+        print(user)
+        return UserSchema(exclude=["password"]).dump(user)
+    else:
+        return {"error": "user not found"}, 404
+    
+
+#Update a user Route
+@users_bp.route("/<int:user_id>", methods=["PUT", "PATCH"])
+@jwt_required()
+def update_user(user_id):
+    user_info = UserSchema(exclude=["id", "date_created"]).load(request.json)
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if user:
+        authorize(user.user_id)
+        user.title = user_info.get("title", user.title)
+        user.description = user_info.get("description", user.description)
+        user.status = user_info.get("status", user.status)
+        db.session.commit()
+        return UserSchema().dump(user), 200
+    else:
+        return {"error": "user not found"}, 404
+
+# Delete a user Route
+@users_bp.route("/<int:user_id>", methods=["DELETE"])
+@jwt_required()
+def delete_user(user_id):
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if user:
+        authorize(user_id)
+        db.session.delete(user)
+        db.session.commit()
+        return {"message": "User deleted successfully"}, 200
+    else:
+        return {"error": "user not found"}, 404
