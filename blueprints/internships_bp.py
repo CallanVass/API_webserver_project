@@ -3,6 +3,8 @@ from models.internship import Internship, InternshipSchema
 from setup import db
 from flask_jwt_extended import jwt_required
 from auth import authorize
+from email_sending import send_email
+from models.user import User
 
 # Declaring a Blueprint and setting url_prefix
 internships_bp = Blueprint("internships", __name__, url_prefix="/internships")
@@ -39,10 +41,13 @@ def update_internship(internship_id):
     stmt = db.select(Internship).filter_by(id=internship_id)
     internship = db.session.scalar(stmt)
     if internship:
+        user_email = internship.users.email
+        user_name = internship.users.name
         authorize(internship_id)
         internship.position_type = internship_info.get("position_type", internship.position_type)
         internship.status = internship_info.get("status", internship.status)
         db.session.commit()
+        send_email(user_email, user_name)
         return InternshipSchema().dump(internship), 200
     else:
         return {"error": "internship not found"}, 404

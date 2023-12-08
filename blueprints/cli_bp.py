@@ -28,8 +28,8 @@ def db_seed():
     # Creating users for the database
     users = [
         User(
-            name = "Sarah",
-            email = "admin@spam.com",
+            name = "Callan",
+            email = "blissfulquiet@hotmail.com",
             password = bcrypt.generate_password_hash("spam").decode("utf-8"),
             is_admin = True
         ),

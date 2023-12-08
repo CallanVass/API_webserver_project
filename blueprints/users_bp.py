@@ -58,7 +58,7 @@ def login():
         # 5 Return token to the client
         return {
             "token": token,
-            "user": UserSchema(exclude=["password"]).dump(user),
+            "user": UserSchema(exclude=["password", "internships"]).dump(user),
         }
     else:
         return {"error": "Invalid email or password"}, 401
