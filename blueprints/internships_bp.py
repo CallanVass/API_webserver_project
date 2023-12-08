@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from models.internship import Internship, InternshipSchema
 from setup import db
 from flask_jwt_extended import jwt_required
@@ -32,21 +32,20 @@ def get_user(internships_id):
     
 
 # #Update an internship Route
-# @internships_bp.route("/<int:internship_id>", methods=["PUT", "PATCH"])
-# @jwt_required()
-# def update_user(user_id):
-#     internship_info = InternshipSchema(exclude=["id", "date_created"]).load(request.json)
-#     stmt = db.select(User).filter_by(id=user_id)
-#     user = db.session.scalar(stmt)
-#     if user:
-#         authorize(user.user_id)
-#         user.title = user_info.get("title", user.title)
-#         user.description = user_info.get("description", user.description)
-#         user.status = user_info.get("status", user.status)
-#         db.session.commit()
-#         return UserSchema().dump(user), 200
-#     else:
-#         return {"error": " not found"}, 404
+@internships_bp.route("/<int:internship_id>", methods=["PUT", "PATCH"])
+@jwt_required()
+def update_internship(internship_id):
+    internship_info = InternshipSchema(exclude=["id", "date_created"]).load(request.json)
+    stmt = db.select(Internship).filter_by(id=internship_id)
+    internship = db.session.scalar(stmt)
+    if internship:
+        authorize(internship_id)
+        internship.position_type = internship_info.get("position_type", internship.position_type)
+        internship.status = internship_info.get("status", internship.status)
+        db.session.commit()
+        return InternshipSchema().dump(internship), 200
+    else:
+        return {"error": "internship not found"}, 404
 
 # # Delete an internship Route
 # @internships_bp.route("/<int:internships_id>", methods=["DELETE"])

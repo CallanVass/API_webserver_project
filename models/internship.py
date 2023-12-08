@@ -3,7 +3,7 @@ from marshmallow import fields
 from marshmallow.validate import OneOf
 from datetime import datetime
 
-VALID_STATUSES = ("Company Interested", "Student Interview Pending" , "Student Declined Interview" "Company Offered Position", "Student Accepted Offer", "Student Declined Offer", "Student Offered Employment", "Student Completed Internship")
+VALID_STATUSES = ("Company Interested", "Student Interview Pending" , "Student Declined Interview", "Company Offered Position", "Student Accepted Offer", "Student Declined Offer", "Student Offered Employment", "Student Completed Internship")
 VALID_POSITIONS = ("Front-end", "Back-end", "Full-stack")
 
 # Create User Model
