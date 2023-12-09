@@ -1,9 +1,9 @@
+import json
 import smtplib
 import configparser
+from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from setup import db
-from models.user import User
 
 
 # Establishing configparser
@@ -13,9 +13,9 @@ config = configparser.ConfigParser()
 config.read("config.ini")
 
 
-
+# Creating email function
 def send_email(email, name):
-
+    
     # Passing variables from configparser into this file
     sender_email = config.get("Email", "sender_email")
     password = config.get("Email", "password")
@@ -30,6 +30,7 @@ def send_email(email, name):
 
     # Add the email body
     body = f"""
+
 Dear {user_name}
 There has been an update to one of your internship statuses.
 
@@ -52,6 +53,26 @@ The Partnerships Team
         # Send the email itself
         server.sendmail(sender_email, receiver_email, message.as_string())
 
-    print("Email sent successfully.")
+    # Data for json serialization
+    sent = f"Email sent to {name} successfully."
+    time = datetime.now()
+    time_string = time.strftime("%Y-%m-%d %H:%M:%S")
 
+    # Dict of data for serialization
+    email_data = {
+        
+        "message sent at": time_string,
+        "content": body,
+        "status": sent
+        
+    }
 
+    # Declare file path
+    file_path = "email_log.json"
+
+    # Append data to json file
+    with open(file_path, 'a') as json_file:
+        json.dump(email_data, json_file, indent=4)
+        json_file.write('\n')
+
+    print(f"Data written to {file_path} successfully.")

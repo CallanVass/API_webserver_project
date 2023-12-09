@@ -13,6 +13,7 @@
 8. [R8: Describe your projects models in terms of the relationships they have with each other](#R8)
 9. [R9: Discuss the database relations to be implemented in your application](#R9)
 10. [R10: Describe the way tasks are allocated and tracked in your project](#R10)
+11. [Email Feature](#R11)
 
 
 
@@ -306,3 +307,22 @@ Although tables are created at the API (Flask) level, they exist on a database l
 Tasks are allocated via GitHub Projects, which acts like a progress board (think Trello) for developers to take tickets from the board in various states of urgency. Tickets are assigned a level of importance, and from there developers can move tickets accross the columns (TODO, In Progress, Done). For larger projects, a more developed system would be beneficial. Something like Trello would allow states to be tracked easier, and has more features overall.
 
 Allocation isn't something I have to worry about as this is a solo project, however tickets on the board can be allocated to users on the project by clicking the ticket and manually allocating them. This brings up the developer's profile picture next to the ticket, allowing for easy identification.
+
+<a id="R11"></a>
+## Email Feature
+
+When the status of an internship is changed, an email is sent to the user whom matches the id of the internship. This feature could be expanded upon in multiple aspects, such as implementing email notifications for changes in details or for user and company account creation/deletion. This section will describe the email feature in detail.
+
+Firstly, the standard Python [smtplib](https://docs.python.org/3/library/smtplib.html) library doesn't appear to support the user of environ to retrieve variables from .flaskenv, so instead we're using [configparser](https://docs.python.org/3/library/configparser.html) instead, which retains the same functionality and is even more explicit, allowing us to read and write configuration files. So intead of reading from .flaskenv, we're reading from config.ini.
+
+Next we've created a function that takes an email address and a name as parameters. The email address is used to send the email to, while the name is used to address the user by their name in the body of the email.
+
+Here is a picture of said function:
+
+![Email Function](/imgs/email_function.png)
+
+Next is setting the variables within the function (this is where we use configparser). After that we use MIME (Multipurpose Internet Mail Extensions) classes to create an object for the email to read. This gives us a simple format with which to pass subjects, senders, and receivers into. The body of the email is next, and here is where we've interpolated the name parameter so as to display the users name when the email is sent.
+
+Below the message body is us attaching the message into another class for formatting purposes, and below that is the connection to the Gmail server using port 587. This does the dirty work of securing the connection, logging into the email account, and sending the email for us.
+
+Lastly we print the successful outcome to a file named email_log.json for data logging purposes.
