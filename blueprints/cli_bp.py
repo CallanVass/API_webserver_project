@@ -52,7 +52,7 @@ def db_seed():
         name = "Meta",
         email = "meta@example.com",
         password = bcrypt.generate_password_hash("spam").decode("utf-8"),
-        ph_number = "0412345678",
+        ph_number = "0412345679",
     ),
     Company(
         name = "Zyrtex LTD",
@@ -64,7 +64,7 @@ def db_seed():
         name = "Reddit",
         email = "reddit@reddit.com",
         password = bcrypt.generate_password_hash("spam").decode("utf-8"),
-        ph_number = "0412345678",
+        ph_number = "0412345677",
     )
     ]
     

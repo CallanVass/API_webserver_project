@@ -326,3 +326,5 @@ Next is setting the variables within the function (this is where we use configpa
 Below the message body is us attaching the message into another class for formatting purposes, and below that is the connection to the Gmail server using port 587. This does the dirty work of securing the connection, logging into the email account, and sending the email for us.
 
 Lastly we print the successful outcome to a file named email_log.json for data logging purposes.
+
+NOTE: I have tried to user configparser to retrieve the JWT_SECRET_KEY and the SQLALCHEMY_DATABASE_URI, however it appears they only work when retrieved via environ.

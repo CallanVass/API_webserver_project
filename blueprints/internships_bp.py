@@ -33,7 +33,7 @@ def get_user(internships_id):
         return {"error": "internship not found"}, 404
     
 
-# #Update an internship Route
+# Update an internship Route
 @internships_bp.route("/<int:internship_id>", methods=["PUT", "PATCH"])
 @jwt_required()
 def update_internship(internship_id):
@@ -52,16 +52,16 @@ def update_internship(internship_id):
     else:
         return {"error": "internship not found"}, 404
 
-# # Delete an internship Route
-# @internships_bp.route("/<int:internships_id>", methods=["DELETE"])
-# @jwt_required()
-# def delete_user(user_id):
-#     stmt = db.select(User).filter_by(id=user_id)
-#     user = db.session.scalar(stmt)
-#     if user:
-#         authorize(user_id)
-#         db.session.delete(user)
-#         db.session.commit()
-#         return {"message": "User deleted successfully"}, 200
-#     else:
-#         return {"error": "User not found"}, 404
+# Delete an internship Route
+@internships_bp.route("/<int:internship_id>", methods=["DELETE"])
+@jwt_required()
+def delete_internship(internship_id):
+    stmt = db.select(Internship).filter_by(id=internship_id)
+    internship = db.session.scalar(stmt)
+    if internship:
+        authorize(internship_id)
+        db.session.delete(internship)
+        db.session.commit()
+        return {"message": "Internship deleted successfully"}, 200
+    else:
+        return {"error": "Internship not found"}, 404

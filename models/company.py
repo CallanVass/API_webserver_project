@@ -1,5 +1,6 @@
 from setup import db, ma
 from marshmallow import fields
+from marshmallow.validate import Regexp, Length, And
 
 # Create User Model
 class Company(db.Model):
@@ -13,7 +14,7 @@ class Company(db.Model):
     # Table Entities
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False, unique=True)
-    ph_number = db.Column(db.Integer)
+    ph_number = db.Column(db.String, unique=True)
     password = db.Column(db.String, nullable=False)
     is_admin = db.Column(db.Boolean, default=True)
 
@@ -25,5 +26,10 @@ class CompanySchema(ma.Schema):
     # Nesting Schema under Internship upon serialization 
     internships = fields.Nested("InternshipSchema", only=["id", "status", "position_type"], many=True)
     # Pass in accepted fields to the schema (for (de)serialization)
+
+    ph_number = fields.String(required=True, validate=And(
+        Regexp("^[0-9]+$", error="Phone number must only contain numbers"),
+        Length(max=10, min=10, error="Phone number must be 10 numbers in length")
+    ))
     class Meta:
         fields = ("id", "name", "email", "password", "ph_number", "is_admin", "internships")
