@@ -43,35 +43,35 @@ def register_company():
     except IntegrityError:
         return {"error": "Email address or phone number already in use"}, 409
     except DataError:
-        return {"error": "Please number already in user"}, 409
+        return {"error": "Phone number already in user"}, 409
     except ValidationError:
-        return {"error": "Please number must be 10 numbers in length"}, 409
+        return {"error": "Phone number must be 10 numbers in length"}, 409
 
 
 
 # # Login Route
-# @companies_bp.route("/login", methods=["POST"])
-# def login():
+@companies_bp.route("/login", methods=["POST"])
+def company_login():
 
-#     # 1 Parse incoming POST body through the schema
-#     user_info = UserSchema(exclude=["id", "name", "is_admin"]).load(request.json)
+    # 1 Parse incoming POST body through the schema
+    company_info = CompanySchema(exclude=["id", "name", "is_admin", "ph_number"]).load(request.json)
 
-#     # 2 Select user with email that matches the one in the POST body
-#     # 3 Check the password hash matches
-#     stmt = db.select(User).where(User.email == user_info["email"])
-#     user = db.session.scalar(stmt)
-#     if user and bcrypt.check_password_hash(user.password, user_info["password"]):
-#         # 4 Create a JWT token
-#         token = create_access_token(
-#             identity=user.id, expires_delta=timedelta(hours=5)
-#         ) 
-#         # 5 Return token to the client
-#         return {
-#             "token": token,
-#             "user": UserSchema(exclude=["password", "internships"]).dump(user),
-#         }
-#     else:
-#         return {"error": "Invalid email or password"}, 401
+    # 2 Select user with email that matches the one in the POST body
+    # 3 Check the password hash matches
+    stmt = db.select(Company).where(Company.email == company_info["email"])
+    company = db.session.scalar(stmt)
+    if company and bcrypt.check_password_hash(company.password, company_info["password"]):
+        # 4 Create a JWT token
+        token = create_access_token(
+            identity=company.id, expires_delta=timedelta(hours=5)
+        ) 
+        # 5 Return token to the client
+        return {
+            "token": token,
+            "company": CompanySchema(exclude=["password", "internships", "id", "ph_number"]).dump(company),
+        }
+    # else:
+    #     return {"error": "Invalid email or password"}, 401
 
 
 # # Get all companies Route

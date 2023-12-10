@@ -4,10 +4,44 @@ from setup import db
 from flask_jwt_extended import jwt_required
 from auth import authorize
 from email_sending import send_email
-from models.user import User
+from sqlalchemy.exc import IntegrityError
+
 
 # Declaring a Blueprint and setting url_prefix
 internships_bp = Blueprint("internships", __name__, url_prefix="/internships")
+
+# Create an internship
+@internships_bp.route("/", methods=["POST"])
+@jwt_required()
+def create_internship():
+    try:
+        internship_info = InternshipSchema(only=["status", "position_type", "user_id",
+                                                "company_id"]).load(request.json)
+        
+        # Check if an internship with the same details already exists in the database
+        existing_internship = Internship.query.filter_by(
+            status=internship_info["status"],
+            position_type=internship_info["position_type"],
+            user_id=internship_info["user_id"],
+            company_id=internship_info["company_id"]
+        ).first()
+        # .first() returns the first result found or None if no result is found
+        if existing_internship:
+            return {"error": "An internship with the same details already exists"}, 400
+        
+        internship = Internship(
+            status = internship_info["status"],
+            position_type = internship_info["position_type"],
+            user_id = internship_info["user_id"],
+            company_id = internship_info["company_id"],
+            )
+        db.session.add(internship)
+        db.session.commit()
+        return InternshipSchema().dump(internship), 201
+    except IntegrityError:
+        return {"error": "Company id or user id doesn't exist"}, 404
+
+
 
 # Get all internships Route
 @internships_bp.route("/")

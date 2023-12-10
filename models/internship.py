@@ -41,4 +41,4 @@ class InternshipSchema(ma.Schema):
 
     # Pass in accepted fields to the schema (for (de)serialization)
     class Meta:
-        fields = ("id", "status", "date_created", "position_type", "companies", "users")
+        fields = ("id", "status", "date_created", "position_type", "companies", "users", "user_id", "company_id")

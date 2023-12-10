@@ -68,10 +68,13 @@ def login():
 @users_bp.route("/")
 @jwt_required()  # Specifying you need a jwt access token to access page
 def all_users():
-    authorize() # Admin only
-    stmt = db.select(User)
-    users = db.session.scalars(stmt).all()
-    return UserSchema(many=True, exclude=["password"]).dump(users)
+    try:
+        authorize() # Admin only
+        stmt = db.select(User)
+        users = db.session.scalars(stmt).all()
+        return UserSchema(many=True, exclude=["password"]).dump(users)
+    except:
+        return {"error": "You do not have the required permissions to access this page"}, 401
 
 
 # Get one user Route
