@@ -74,28 +74,36 @@ def company_login():
     #     return {"error": "Invalid email or password"}, 401
 
 
-# # Get all companies Route
-# @companies_bp.route("/")
-# @jwt_required()  # Specifying you need a jwt access token to access page
-# def all_companies():
-#     authorize() # Admin only
-#     stmt = db.select(User)
-#     companies = db.session.scalars(stmt).all()
-#     return UserSchema(many=True, exclude=["password"]).dump(companies)
+# Get all companies Route
+@companies_bp.route("/")
+@jwt_required()  # Specifying you need a jwt access token to access page
+def all_companies():
+    authorize() # Admin only
+    stmt = db.select(Company)
+    companies = db.session.scalars(stmt).all()
+    return CompanySchema(many=True, exclude=["password"]).dump(companies)
 
+# Get all companies (without internships)
+@companies_bp.route("/no-internships")
+@jwt_required()  # Specifying you need a jwt access token to access page
+def all_companies_no_internship():
+    authorize() # Admin only
+    stmt = db.select(Company)
+    companies = db.session.scalars(stmt).all()
+    return CompanySchema(many=True, exclude=["password", "internships"]).dump(companies)
 
-# # Get one user Route
-# @companies_bp.route("/<int:user_id>")
-# @jwt_required()
-# def get_user(user_id):
-#     authorize()
-#     stmt = db.select(User).filter_by(id=user_id)
-#     user = db.session.scalar(stmt)
-#     if user:
-#         print(user)
-#         return UserSchema(exclude=["password"]).dump(user)
-#     else:
-#         return {"error": "user not found"}, 404
+# Get one company Route
+@companies_bp.route("/<int:company_id>")
+@jwt_required()
+def get_user(company_id):
+    authorize()
+    stmt = db.select(Company).filter_by(id=company_id)
+    company = db.session.scalar(stmt)
+    if company:
+        print(company)
+        return CompanySchema(exclude=["password"]).dump(company)
+    else:
+        return {"error": "company not found"}, 404
     
 
 # #Update a user Route
@@ -115,16 +123,17 @@ def company_login():
 #     else:
 #         return {"error": "user not found"}, 404
 
-# # Delete a user Route
-# @companies_bp.route("/<int:user_id>", methods=["DELETE"])
-# @jwt_required()
-# def delete_user(user_id):
-#     stmt = db.select(User).filter_by(id=user_id)
-#     user = db.session.scalar(stmt)
-#     if user:
-#         authorize(user_id)
-#         db.session.delete(user)
-#         db.session.commit()
-#         return {"message": "User deleted successfully"}, 200
-#     else:
-#         return {"error": "user not found"}, 404
+# Delete a company Route
+# WARNING: Internships cannot exist without a company, and will be cascade deleted
+@companies_bp.route("/<int:company_id>", methods=["DELETE"])
+@jwt_required()
+def delete_user(company_id):
+    stmt = db.select(Company).filter_by(id=company_id)
+    company = db.session.scalar(stmt)
+    if company:
+        authorize()
+        db.session.delete(company)
+        db.session.commit()
+        return {"message": "Company deleted successfully"}, 200
+    else:
+        return {"error": "company not found"}, 404
