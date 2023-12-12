@@ -22,7 +22,7 @@ def send_email(email, name):
     receiver_email = email
     user_name = name
 
-    # Create the MIME object for the email
+    # Create the MIME object (template) for the email
     message = MIMEMultipart()
     message["From"] = sender_email
     message["To"] = receiver_email

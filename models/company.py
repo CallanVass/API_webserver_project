@@ -25,17 +25,16 @@ class CompanySchema(ma.Schema):
     
     # Nesting Schema under Internship upon serialization 
     internships = fields.Nested("InternshipSchema", only=["id", "status", "position_type"], many=True)
-    # old_password field is used only for resetting passwords, otherwise it should be exluded 
-    # when calling schema
     password = fields.String(validate=And(
         Length(min=8, error="Password must be 10 numbers in length")
     ))
+
+    # old_password field is used when resetting company passwords
     old_password = fields.Raw()
-    # Pass in accepted fields to the schema (for (de)serialization)
-    
     ph_number = fields.String(required=True, validate=And(
         Regexp("^[0-9]+$", error="Phone number must only contain numbers"),
         Length(max=10, min=10, error="Phone number must be 10 numbers in length")
     ))
+    # Pass in accepted fields to the schema (for (de)serialization)
     class Meta:
         fields = ("id", "name", "email", "password", "ph_number", "is_admin", "internships", "old_password")

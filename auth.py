@@ -1,6 +1,7 @@
-from flask_jwt_extended import  get_jwt_identity
+from flask_jwt_extended import get_jwt_identity
 from flask import abort
 from models.user import User
+from models.company import Company
 from setup import db
 
 def authorize(user_id=None):
