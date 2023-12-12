@@ -14,6 +14,7 @@
 9. [R9: Discuss the database relations to be implemented in your application](#R9)
 10. [R10: Describe the way tasks are allocated and tracked in your project](#R10)
 11. [Email Feature](#R11)
+12. [Logging Configuration](#R12)
 
 
 
@@ -328,3 +329,11 @@ Below the message body is us attaching the message into another class for format
 Lastly we print the successful outcome to a file named email_log.json for data logging purposes.
 
 NOTE: I have tried to user configparser to retrieve the JWT_SECRET_KEY and the SQLALCHEMY_DATABASE_URI, however it appears they only work when retrieved via environ.
+
+<a id="R12"></a>
+## Logging Configuration
+
+Using the [logging module](https://docs.python.org/3/library/logging.html), we're able to control the output of our terminal logging information and redirect it to wherever we want. As seen in the commented basicConfig() function below, we manually set the output using StreamHandler and Filehandler to print to the console and a file called "server_log.txt" respectively.
+
+![Logging Function](/imgs/logging_function.png)
+

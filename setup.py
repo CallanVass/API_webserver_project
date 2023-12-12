@@ -10,15 +10,15 @@ import logging
 app = Flask(__name__)
 
 # Logging the terminal output using the logging module (by configuring the root logger)
-logging.basicConfig(level=logging.DEBUG, # This can also be INFO, WARNING, ERROR, or CRITICAL
-                    format='[%(levelname)s] - %(message)s',
-                    handlers=[
+logging.basicConfig(level = logging.DEBUG, # This can also be INFO, WARNING, ERROR, or CRITICAL
+                    format = "[%(levelname)s] - %(message)s",
+                    handlers = [
                         
                         # Print to console using StreamHandler
                         logging.StreamHandler(),
                         
                         # Print to file of choice using FileHandler
-                        logging.FileHandler('server_log.txt') # Ensure you change your-
+                        logging.FileHandler("server_log.txt") # Ensure you change your-
                         # -server_log_sample.txt file name to match the FileHandler name
                     ])
 
