@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import create_access_token, jwt_required
 from datetime import timedelta
 from auth import authorize
+from marshmallow import ValidationError
 
 # Declaring a Blueprint and setting url_prefix
 users_bp = Blueprint("users", __name__, url_prefix="/users")
@@ -107,6 +108,34 @@ def update_user(user_id):
         return UserSchema().dump(user), 200
     else:
         return {"error": "user not found"}, 404
+    
+# TODO CHECK THIS
+# Update company password
+# @companies_bp.route("/update-password/<int:company_id>", methods=["PUT", "PATCH"])
+# @jwt_required()
+# def update_company_password(company_id):
+#     try:
+#         company_info = CompanySchema(exclude=["id", "email", "ph_number",
+#                                             "name"]).load(request.json, partial=True)
+#         stmt = db.select(Company).filter_by(id=company_id)
+#         company = db.session.scalar(stmt)
+#         if company:
+#             authorize()
+#             old_password = request.json.get("old_password")
+#             if old_password and bcrypt.check_password_hash(company.password, old_password):
+#                 new_password = company_info.get("password")
+#                 if new_password:
+#                     company.password = bcrypt.generate_password_hash(new_password).decode("utf8")
+#                     db.session.commit()
+#                     return {"success": "password reset successfully"}, 200
+#                 else:
+#                     return {"error": "New password not provided"}, 400
+#             else:
+#                 return {"error": "Old password incorrect"}, 400
+#         else:
+#             return {"error": "company not found"}, 404
+#     except ValidationError:
+#         return {"error": "Password must be at least 8 characters in length"}, 409
 
 # Delete a user Route
 @users_bp.route("/<int:user_id>", methods=["DELETE"])

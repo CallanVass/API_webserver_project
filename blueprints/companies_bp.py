@@ -54,7 +54,7 @@ def register_company():
 def company_login():
 
     # 1 Parse incoming POST body through the schema
-    company_info = CompanySchema(exclude=["id", "name", "is_admin", "ph_number"]).load(request.json)
+    company_info = CompanySchema(exclude=["id", "name", "is_admin", "ph_number", "old_password"]).load(request.json)
 
     # 2 Select user with email that matches the one in the POST body
     # 3 Check the password hash matches
@@ -70,8 +70,8 @@ def company_login():
             "token": token,
             "company": CompanySchema(exclude=["password", "internships", "id", "ph_number"]).dump(company),
         }
-    # else:
-    #     return {"error": "Invalid email or password"}, 401
+    else:
+        return {"error": "Invalid email or password"}, 401
 
 
 # Get all companies Route
@@ -83,6 +83,7 @@ def all_companies():
     companies = db.session.scalars(stmt).all()
     return CompanySchema(many=True, exclude=["password"]).dump(companies)
 
+
 # Get all companies (without internships)
 @companies_bp.route("/no-internships")
 @jwt_required()  # Specifying you need a jwt access token to access page
@@ -91,6 +92,7 @@ def all_companies_no_internship():
     stmt = db.select(Company)
     companies = db.session.scalars(stmt).all()
     return CompanySchema(many=True, exclude=["password", "internships"]).dump(companies)
+
 
 # Get one company Route
 @companies_bp.route("/<int:company_id>")
@@ -106,25 +108,57 @@ def get_user(company_id):
         return {"error": "company not found"}, 404
     
 
-# #Update a user Route
-# @companies_bp.route("/<int:user_id>", methods=["PUT", "PATCH"])
-# @jwt_required()
-# def update_user(user_id):
-#     user_info = UserSchema(exclude=["id", "date_created"]).load(request.json)
-#     stmt = db.select(User).filter_by(id=user_id)
-#     user = db.session.scalar(stmt)
-#     if user:
-#         authorize(user.user_id)
-#         user.title = user_info.get("title", user.title)
-#         user.description = user_info.get("description", user.description)
-#         user.status = user_info.get("status", user.status)
-#         db.session.commit()
-#         return UserSchema().dump(user), 200
-#     else:
-#         return {"error": "user not found"}, 404
+# Update a company Route
+@companies_bp.route("/<int:company_id>", methods=["PUT", "PATCH"])
+@jwt_required()
+def update_company(company_id):
+    company_info = CompanySchema(exclude=["id", "password"]).load(request.json, partial=True)
+    stmt = db.select(Company).filter_by(id=company_id)
+    company = db.session.scalar(stmt)
+    if company:
+        authorize()
+        company.name = company_info.get("name", company.name)
+        company.email = company_info.get("email", company.email)
+        company.ph_number = company_info.get("ph_number", company.ph_number)
+        db.session.commit()
+        return CompanySchema(exclude=["password", "internships"]).dump(company), 200
+    else:
+        return {"error": "company not found"}, 404
+    
+
+# Update company password
+@companies_bp.route("/update-password/<int:company_id>", methods=["PUT", "PATCH"])
+@jwt_required()
+def update_company_password(company_id):
+    try:
+        company_info = CompanySchema(exclude=["id", "email", "ph_number",
+                                            "name"]).load(request.json, partial=True)
+        stmt = db.select(Company).filter_by(id=company_id)
+        company = db.session.scalar(stmt)
+        if company:
+            authorize()
+            old_password = request.json.get("old_password")
+            if old_password and bcrypt.check_password_hash(company.password, old_password):
+                new_password = company_info.get("password")
+                if new_password:
+                    company.password = bcrypt.generate_password_hash(new_password).decode("utf8")
+                    db.session.commit()
+                    return {"success": "password reset successfully"}, 200
+                else:
+                    return {"error": "New password not provided"}, 400
+            else:
+                return {"error": "Old password incorrect"}, 400
+        else:
+            return {"error": "company not found"}, 404
+    except ValidationError:
+        return {"error": "Password must be at least 8 characters in length"}, 409
+
+ 
+
 
 # Delete a company Route
 # WARNING: Internships cannot exist without a company, and will be cascade deleted
+# upon the deletion of a company
 @companies_bp.route("/<int:company_id>", methods=["DELETE"])
 @jwt_required()
 def delete_user(company_id):
