@@ -22,7 +22,8 @@ class UserSchema(ma.Schema):
 
     # Nesting Schema under Internship upon serialization 
     internships = fields.Nested("InternshipSchema", many=True)
+    old_password = fields.Raw()
 
     # Pass in accepted fields to the schema (for (de)serialization)
     class Meta:
-        fields = ("id", "name", "email", "password", "is_admin", "internships")
+        fields = ("id", "name", "email", "password", "is_admin", "internships", "old_password")

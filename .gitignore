@@ -4,3 +4,4 @@ __pycache__
 .vscode
 .flaskenv
 config.ini
+server_log.txt
