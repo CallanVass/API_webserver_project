@@ -19,7 +19,7 @@ def db_create():
     db.create_all()
 
     # Printing Created Tables to ensure everything has worked as intended
-    print("Created Tables")
+    print("Dropped and Created Tables")
 
 
 # Cli command to seed the database with users, companies, and internships
