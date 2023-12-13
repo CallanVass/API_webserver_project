@@ -7,7 +7,7 @@ from datetime import datetime
 VALID_STATUSES = ("Company Interested", "Student Interview Pending" , "Student Declined Interview", "Company Offered Position", "Student Accepted Offer", "Student Declined Offer", "Student Offered Employment", "Student Completed Internship")
 VALID_POSITIONS = ("Front-end", "Back-end", "Full-stack")
 
-# Create User Model
+# Create Internship Model
 class Internship(db.Model):
 
     # Name the table
@@ -29,7 +29,7 @@ class Internship(db.Model):
 
     company_id = db.Column(db.Integer, db.ForeignKey("companies.id"), nullable=False)
 
-    # db.relationship defines a relationship between User and Company
+    # db.relationship defines a relationship between Internship and Company
     companies = db.relationship("Company", back_populates="internships")
 
 class InternshipSchema(ma.Schema):

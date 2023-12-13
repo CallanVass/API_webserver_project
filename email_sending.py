@@ -31,7 +31,8 @@ def send_email(email, name):
     # Add the email body
     body = f"""
 
-Dear {user_name}
+Dear {user_name},
+
 There has been an update to one of your internship statuses.
 
 Please log on to view the updated status.
@@ -74,5 +75,6 @@ The Partnerships Team
     with open(file_path, 'a') as json_file:
         json.dump(email_data, json_file, indent=4)
         json_file.write('\n')
+
 
     print(f"Data written to {file_path} successfully.")

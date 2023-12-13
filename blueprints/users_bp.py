@@ -101,27 +101,31 @@ def get_user(user_id):
 @users_bp.route("/<int:user_id>", methods=["PUT", "PATCH"])
 @jwt_required() # JSON Web Token must be provided for verification
 def update_user(user_id):
-    # Parse incoming POST body through the schema
-    user_info = UserSchema(exclude=["id", "date_created"]).load(request.json)
-    # Select a user via user id
-    stmt = db.select(User).filter_by(id=user_id)
-    user = db.session.scalar(stmt)
-    if user:
-        # If the user exists, accept these fields from the POST body
-        # If no value is passed, retain original value
-        authorize(user.user_id)
-        user.title = user_info.get("title", user.title)
-        user.description = user_info.get("description", user.description)
-        user.status = user_info.get("status", user.status)
-        # Commit new details to the database
-        db.session.commit()
-        return UserSchema().dump(user), 200
-    else:
-        # If the user_id doesn't match a user, return an error
-        return {"error": "user not found"}, 404
+    try:
+        # Parse incoming POST body through the schema
+        user_info = UserSchema(only=["name", "email"]).load(request.json, partial=True)
+        # Select a user via user id
+        stmt = db.select(User).filter_by(id=user_id)
+        user = db.session.scalar(stmt)
+        if user:
+            # If the user exists, accept these fields from the POST body
+            # If no value is passed, retain original value
+            authorize()
+            user.name = user_info.get("name", user.name)
+            user.email = user_info.get("email", user.email)
+            # Commit new details to the database
+            db.session.commit()
+            return UserSchema(exclude=["password"]).dump(user), 200
+        else:
+            # If the user_id doesn't match a user, return an error
+            return {"error": "user not found"}, 404
+    except IntegrityError:
+        return {"error": "Please only include fields with modified information"}, 409
+
+
     
 
-# Update company password
+# Update user password
 @users_bp.route("/update-password/<int:user_id>", methods=["PUT", "PATCH"])
 @jwt_required() # JSON Web Token must be provided for verification
 def update_user_password(user_id):

@@ -22,7 +22,7 @@ class UserSchema(ma.Schema):
 
     # Nesting Schema under Internship upon serialization 
     internships = fields.Nested("InternshipSchema", many=True)
-
+    email = fields.Email(required=True)
     # old_password field is used when resetting user passwords
     old_password = fields.Raw()
 

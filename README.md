@@ -98,36 +98,55 @@ Create New User
 
 *Allows is_admin users to register a new account, whether admin (staff) or not (student). This function must check whether a user is a User and also is_admin; this prevents companies from altering student information.*
 
-TODO: FIELDS TO PASS IN THE BODY
+FIELDS: 
+{
+    "email": "samples@example.com", **required**
+    "password": "samplepassword", **required**
+    "name": "samplename" **required**
+}
 
 - POST /users/login
 User Login
 
 *A route for users to login to their accounts from. Will check JWT (JSON Web Token) for authentication, and unless you're is_admin, the user will be granted read-only permissions.*
 
-TODO: FIELDS TO PASS IN THE BODY
+FIELDS: 
+{
+    "email": "samples@example.com", **required**
+    "password": "samplepassword" **required**
+}
 
 - GET /users/
 View All Users
 
 *Retrieves a list of all users. This route will only be accessible for the admin (both user and companies) to view, since students don't need access to view their peers or their internship status. Nested beneath the users should be a list/dict with their current internships.*
 
+FIELDS: NONE
+
 - GET /users/user_id
 View One User
 
 *Once again this route will only be accessible for the admin (both user and companies) to view for the same reasons. This will return the student along with their nested internships.*
+
+FIELDS: NONE
 
 - PUT /users/user_id
 Update User Information
 
 *This route allows user information to be updated. It's only accessible by the user admin, as companies don't need to alter user information.*
 
-TODO: FIELDS TO PASS IN THE BODY
+FIELDS:
+{
+    "email": "samples@example.com", **optional**
+    "password": "samplepassword" **optional**
+}
 
 - DELETE /users/user_id
 Delete One User
 
 *Simply, this route deletes a user from the database, and therefore all listings. The user must have admin permissions. Companies cannot delete users.*
+
+FIELDS: NONE
 
 #### Companies
 
@@ -136,36 +155,57 @@ Create New Company
 
 *Allows accounts to be created for companies, however this is only possible for is_admin users. Companies cannot create new companies, it must be requested of the staff at Coder Academy. This also prevents anyone from creating a company account.*
 
-TODO: FIELDS TO PASS IN THE BODY
+FIELDS: 
+{
+    "email": "samples@example.com", **required**
+    "password": "samplepassword", **required**
+    "name": "samplename", **required**
+    "ph_number": "0411222333" **required**
+}
 
 - POST /companies/login
 Company Login
 
 *A route for companies to login to their accounts. Authenticates via JWT. Companies will only be able to alter the status of internships and view students.*
 
+FIELDS: 
+{
+    "email": "samples@example.com", **required**
+    "password": "samplepassword" **required**
+}
+
 - GET /companies/
 View All Companies
 
 *Allows user to view a list of companies. Companies cannot view a total list, although they will be able to see when students are in the process of getting an internship. This will encourage healthy competition as well as ensure companies act quickly when selecting students.*
+
+FIELDS: NONE
 
 - GET /companies/company_id
 View One Company
 
 *Allows user to view one company. Will likely be is_admin, as students nor companies need to view a single company for any reason.*
 
+FIELDS: NONE
+
 - PUT /companies/company_id
 Update Company Information
 
 *Allows user (is_admin) to update company information. Companies can update their own information too. General users cannot, obviously, update company information.*
 
-TODO: FIELDS TO PASS IN THE BODY
+FIELDS: 
+{
+    "email": "samples@example.com", **optional**
+    "name": "samplename", **optional**
+    "ph_number": "0411222333" **optional**
+}
 
 - DELETE /companies/company_id
 Delete One Company
 
 *Deletes a single company from the database. Only accessible by an is_admin user.*
 
-TODO: FIELDS TO PASS IN THE BODY
+FIELDS: NONE
 
 #### Internships
 
@@ -197,6 +237,7 @@ TODO: FIELDS TO PASS IN THE BODY
 Delete One Internship
 
 Allows deletion of a single internship. For when the internship is over or offer has been rejected by either party.
+
 <a id="R6"></a>
 ## R6: An ERD for your app
 

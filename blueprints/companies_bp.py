@@ -119,23 +119,26 @@ def get_company(company_id):
 @companies_bp.route("/<int:company_id>", methods=["PUT", "PATCH"])
 @jwt_required() # JSON Web Token must be provided for verification
 def update_company(company_id):
-    # Parse incoming POST body through the schema
-    company_info = CompanySchema(exclude=["id", "password"]).load(request.json, partial=True)
-    # Select a single company from the db
-    stmt = db.select(Company).filter_by(id=company_id)
-    company = db.session.scalar(stmt)
-    if company:
-        authorize() # Admin only
-        # Align incoming POST body with required CompanySchema parameters
-        company.name = company_info.get("name", company.name)
-        company.email = company_info.get("email", company.email)
-        company.ph_number = company_info.get("ph_number", company.ph_number)
-        # Commit company change to database
-        db.session.commit()
-        # Return company information back to the body
-        return CompanySchema(exclude=["password", "internships"]).dump(company), 200
-    else:
-        return {"error": "company not found"}, 404
+    try:
+        # Parse incoming POST body through the schema
+        company_info = CompanySchema(exclude=["id", "password"]).load(request.json, partial=True)
+        # Select a single company from the db
+        stmt = db.select(Company).filter_by(id=company_id)
+        company = db.session.scalar(stmt)
+        if company:
+            authorize() # Admin only
+            # Align incoming POST body with required CompanySchema parameters
+            company.name = company_info.get("name", company.name)
+            company.email = company_info.get("email", company.email)
+            company.ph_number = company_info.get("ph_number", company.ph_number)
+            # Commit company change to database
+            db.session.commit()
+            # Return company information back to the body
+            return CompanySchema(exclude=["password", "internships"]).dump(company), 200
+        else:
+            return {"error": "company not found"}, 404
+    except ValidationError:
+        return {"error": "Password must be changed via update-password route"}, 409
     
 
 # Update company password
