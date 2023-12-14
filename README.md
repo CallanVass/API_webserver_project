@@ -101,6 +101,7 @@ Create New User
 FIELDS: 
 {
     "email": "samples@example.com", **required**
+    
     "password": "samplepassword", **required**
     "name": "samplename" **required**
 }
