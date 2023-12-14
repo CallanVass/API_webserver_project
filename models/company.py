@@ -2,7 +2,7 @@ from setup import db, ma
 from marshmallow import fields
 from marshmallow.validate import Regexp, Length, And
 
-# Create User Model
+# Create Company Model
 class Company(db.Model):
 
     # Name the table

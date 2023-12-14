@@ -106,6 +106,8 @@ FIELDS:
     "name": "samplename" **required**
 }
 
+![Register User](/imgs/register_user_route.png)
+
 - POST /users/login
 User Login
 
@@ -117,6 +119,8 @@ FIELDS:
     "password": "samplepassword" **required**
 }
 
+![Login User](/imgs/login_user_route.png)
+
 - GET /users/
 View All Users
 
@@ -124,12 +128,16 @@ View All Users
 
 FIELDS: NONE
 
+![Get User](/imgs/get_all_users_route.png)
+
 - GET /users/user_id
 View One User
 
 *Once again this route will only be accessible for the admin (both user and companies) to view for the same reasons. This will return the student along with their nested internships.*
 
 FIELDS: NONE
+
+![Get One User](/imgs/get_one_user_route.png)
 
 - PUT /users/user_id
 Update User Information
@@ -142,6 +150,8 @@ FIELDS:
     "password": "samplepassword" **optional**
 }
 
+![Update User](/imgs/update_a_user_route.png)
+
 - PUT /users/update-password/user_id
 Update User Password 
 
@@ -153,12 +163,16 @@ FIELDS:
   "password": "sample_new_password"
 }
 
+![Update User Password](/imgs/update_user_password_route.png)
+
 - DELETE /users/user_id
 Delete One User
 
 *Simply, this route deletes a user from the database, and therefore all listings. The user must have admin permissions. Companies cannot delete users.*
 
 FIELDS: NONE
+
+![Delete User](/imgs/delete_user_route.png)
 
 #### Companies
 
@@ -175,6 +189,8 @@ FIELDS:
     "ph_number": "0411222333" **required**
 }
 
+![Register Company](/imgs/register_company_route.png)
+
 - POST /companies/login
 Company Login
 
@@ -186,6 +202,8 @@ FIELDS:
     "password": "samplepassword" **required**
 }
 
+![Login Company](/imgs/login_company_route.png)
+
 - GET /companies/
 View All Companies
 
@@ -193,12 +211,16 @@ View All Companies
 
 FIELDS: NONE
 
+![Get All Companies](/imgs/get_all_companies_route.png)
+
 - GET /companies/company_id
 View One Company
 
 *Allows user to view one company. Will likely be is_admin, as students nor companies need to view a single company for any reason.*
 
 FIELDS: NONE
+
+![Get One Company](/imgs/get_one_company_route.png)
 
 - PUT /companies/company_id
 Update Company Information
@@ -212,6 +234,8 @@ FIELDS:
     "ph_number": "0411222333" **optional**
 }
 
+![Update Company](/imgs/update_company_route.png)
+
 - PUT /companies/update-password/company_id
 Update Company Password 
 
@@ -223,12 +247,16 @@ FIELDS:
   "password": "sample_new_password"
 }
 
+![Update Company Password](/imgs/update_company_password_route.png)
+
 - DELETE /companies/company_id
 Delete One Company
 
 *Deletes a single company from the database. Only accessible by an is_admin user.*
 
 FIELDS: NONE
+
+![Delete Company](/imgs/delete_company_route.png)
 
 #### Internships
 
@@ -248,6 +276,8 @@ FIELDS:
   "company_id": company_id **required**
 }
 
+![Create Internship](/imgs/create_internship_route.png)
+
 - GET /internships/internship_id
 View One Internship
 
@@ -255,12 +285,16 @@ View One Internship
 
 FIELDS: NONE
 
+![Get One Internship](/imgs/get_one_internship_route.png)
+
 - GET /internships/
 View All Internships
 
 *Gets a list of every internship. Nested after the internships are the users they're attached to. Only accessible by companies or is_admin users.*
 
 FIELDS: NONE
+
+![Get All Internships](/imgs/get_all_internship_route.png)
 
 - PUT /internships/internship_id
 Update Internship Status
@@ -276,12 +310,16 @@ FIELDS:
   "status": "Company Interested" **optional**
 }
 
+![Update Internship](/imgs/update_internship_route.png)
+
 - DELETE /internships/internship_id
 Delete One Internship
 
 Allows deletion of a single internship. For when the internship is over or offer has been rejected by either party.
 
 FIELDS: NONE
+
+![Delete Internship](/imgs/delete_internship_route.png)
 
 <a id="R6"></a>
 ## R6: An ERD for your app
@@ -340,6 +378,7 @@ This lets us reference .env files and set them as global variables. It reads the
 - **PostgreSQL**
 
 PostgreSQL is an open source database management system for relational databases with a huge amount of compatability with various Frameworks and operating systems.
+
 <a id="R8"></a>
 ## R8: Describe your projects models in terms of the relationships they have with each other
 
@@ -355,7 +394,7 @@ Nested Models: Internship attibute id, status.
 
 Users((PK)user_id, name, email, password, is_admin)
 
-TODO: Screenshots of MODEL
+![User Model](/imgs/user_model.png)
 
 **Companies**
 
@@ -367,7 +406,7 @@ Nested Models: Internships attibute id, position_type, status.
 
 Companies((PK)company_id, name, email, ph_number, password, is_admin)
 
-TODO: Screenshots of MODEL
+![Company Model](/imgs/company_model.png)
 
 **Internships**
 
@@ -379,7 +418,8 @@ Nested Models: Users attibute name. Companies attribute name.
 
 Internships((PK)company_id, status, date_created, position_type, (FK)user_id, (FK)company_id)
 
-TODO: Screenshots of MODEL
+![Internship Model](/imgs/user_model.png)
+
 <a id="R9"></a>
 ## R9: Discuss the database relations to be implemented in your application
 
@@ -388,12 +428,24 @@ To begin with I will create a database called "Partnerships" using PostgreSQL. F
 Since it's a relational database, we need a way to *relate* tables to one another. This is done by the use of foregin keys within the tables themselves whenever a connection is established between two tables. For instance, the Internships table has two foreign keys: user_id and company_id. The definition of these keys establishes the relationship within the database. However it's to be noted that not every table relates to every other table. Users doesn't relate to Companies, and vice versa. Their only connection is through the Internships table.
 
 Although tables are created at the API (Flask) level, they exist on a database level. Luckily, SQLAlchemy gives us a way to create the connections that are accessible and mutable via Flask.
+
 <a id="R10"></a>
 ## R10: Describe the way tasks are allocated and tracked in your project
 
 Tasks are allocated via GitHub Projects, which acts like a progress board (think Trello) for developers to take tickets from the board in various states of urgency. Tickets are assigned a level of importance, and from there developers can move tickets accross the columns (TODO, In Progress, Done). For larger projects, a more developed system would be beneficial. Something like Trello would allow states to be tracked easier, and has more features overall.
 
 Allocation isn't something I have to worry about as this is a solo project, however tickets on the board can be allocated to users on the project by clicking the ticket and manually allocating them. This brings up the developer's profile picture next to the ticket, allowing for easy identification.
+
+![1st Progress Snapshot](/imgs/task_tracking_1.png)
+
+
+![2nd Progress Snapshot](/imgs/task_tracking_2.png)
+
+
+![3rd Progress Snapshot](/imgs/task_tracking_3.png)
+
+
+![4th Progress Snapshot](/imgs/task_tracking_4.png)
 
 <a id="R11"></a>
 ## Email Feature
@@ -415,6 +467,8 @@ Below the message body is us attaching the message into another class for format
 Lastly we print the successful outcome to a file named email_log.json for data logging purposes.
 
 NOTE: I have tried to user configparser to retrieve the JWT_SECRET_KEY and the SQLALCHEMY_DATABASE_URI, however it appears they only work when retrieved via environ.
+
+![Sent Email](/imgs/sent_email.png)
 
 <a id="R12"></a>
 ## Logging Configuration
