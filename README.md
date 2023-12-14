@@ -476,3 +476,32 @@ Using the [logging module](https://docs.python.org/3/library/logging.html), we'r
 
 ![Logging Function](/imgs/logging_function.png)
 
+<a id="R13"></a>
+## Bibliography
+
+Bayer, M 2023, SQLAlchemy Documentation — SQLAlchemy 2.0 Documentation, docs.sqlalchemy.org, viewed 1 December 2023, <https://docs.sqlalchemy.org/en/20/>.
+
+ConfigParser – Work with configuration files - Python Module of the Week n.d., pymotw.com, viewed 9 December 2023, <https://pymotw.com/2/ConfigParser/>.
+
+Countryman, M 2011, Flask-Bcrypt — Flask-Bcrypt 1.0.1 documentation, flask-bcrypt.readthedocs.io, viewed 4 December 2023, <https://flask-bcrypt.readthedocs.io/en/1.0.1/>.
+
+HTTP response status codes n.d., MDN Web Docs, viewed 11 December 2023, <https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#Client_error_responses>.
+
+Liang, M 2021, Understanding Object-Relational Mapping: Pros, Cons, and Types, AltexSoft, viewed 2 December 2023, <https://www.altexsoft.com/blog/object-relational-mapping/>.
+
+logging — Logging facility for Python — Python 3.10.0 documentation 2023, docs.python.org, viewed 12 December 2023, <https://docs.python.org/3/library/logging.html>.
+
+Loria, S 2023, marshmallow-sqlalchemy — marshmallow-sqlalchemy 0.29.0 documentation, marshmallow-sqlalchemy.readthedocs.io, viewed 1 December 2023, <https://marshmallow-sqlalchemy.readthedocs.io/en/latest/>.
+
+PostgreSQL: Documentation 2023, www.postgresql.org, viewed 2 December 2023, <https://www.postgresql.org/docs/>.
+
+Priya, B 2022, Logging in Python: A Developer’s Guide, Product Blog • Sentry, viewed 11 December 2023, <https://blog.sentry.io/logging-in-python-a-developers-guide/>.
+
+Python - Sending Email using SMTP - Tutorialspoint 2020, Tutorialspoint.com, viewed 8 December 2023, <https://www.tutorialspoint.com/python/python_sending_email.htm>.
+
+Shrivastava, M 2020, How to send emails using python, Medium, viewed 8 December 2023, <https://medium.com/@manavshrivastava/how-to-send-emails-using-python-c89b802e0b05>.
+
+smtplib — SMTP protocol client — Python 3.8.1 documentation 2020, Python.org, viewed 9 December 2023, <https://docs.python.org/3/library/smtplib.html>.
+
+Welcome to Flask — Flask Documentation (3.0.x) 2010, flask.palletsprojects.com, viewed 1 December 2023, <https://flask.palletsprojects.com/en/3.0.x/>.
+
