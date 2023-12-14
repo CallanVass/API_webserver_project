@@ -101,7 +101,6 @@ Create New User
 FIELDS: 
 {
     "email": "samples@example.com", **required**
-    
     "password": "samplepassword", **required**
     "name": "samplename" **required**
 }
@@ -468,7 +467,7 @@ Lastly we print the successful outcome to a file named email_log.json for data l
 
 NOTE: I have tried to user configparser to retrieve the JWT_SECRET_KEY and the SQLALCHEMY_DATABASE_URI, however it appears they only work when retrieved via environ.
 
-![Sent Email](/imgs/sent_email.png)
+![Sent Email](/imgs/sent_email.jpg)
 
 <a id="R12"></a>
 ## Logging Configuration
