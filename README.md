@@ -202,7 +202,7 @@ FIELDS:
     "password": "samplepassword" **required**
 }
 
-![Login Company](/imgs/login_company_route.png)
+![Login Company](/imgs/company_login_route.png)
 
 - GET /companies/
 View All Companies
@@ -294,7 +294,7 @@ View All Internships
 
 FIELDS: NONE
 
-![Get All Internships](/imgs/get_all_internship_route.png)
+![Get All Internships](/imgs/get_all_internships_route.png)
 
 - PUT /internships/internship_id
 Update Internship Status
