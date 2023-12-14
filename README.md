@@ -141,6 +141,17 @@ FIELDS:
     "password": "samplepassword" **optional**
 }
 
+- PUT /users/update-password/user_id
+Update User Password 
+
+*Changes the old password (current password) to a new password. Only available for user admins to use*
+
+FIELDS:
+{
+ "old_password": "sample_old_password",
+  "password": "sample_new_password"
+}
+
 - DELETE /users/user_id
 Delete One User
 
@@ -200,6 +211,17 @@ FIELDS:
     "ph_number": "0411222333" **optional**
 }
 
+- PUT /companies/update-password/company_id
+Update Company Password 
+
+*Changes the old password (current password) to a new password. Only available for user admins to use*
+
+FIELDS:
+{
+ "old_password": "sample_old_password",
+  "password": "sample_new_password"
+}
+
 - DELETE /companies/company_id
 Delete One Company
 
@@ -214,29 +236,51 @@ Create Internship
 
 *Create an internship and attach it to a user. Only is_admin users will be allowed to create internships.*
 
-TODO: FIELDS TO PASS IN THE BODY
+VALID_STATUSES = ("Company Interested", "Student Interview Pending" , "Student Declined Interview", "Company Offered Position", "Student Accepted Offer", "Student Declined Offer", "Student Offered Employment", "Student Completed Internship")
+VALID_POSITIONS = ("Front-end", "Back-end", "Full-stack")
+
+FIELDS:
+{
+  "status": "Company Interested", **required**
+  "position_type": "Back-end", **required**
+  "user_id": user_id, **required**
+  "company_id": company_id **required**
+}
 
 - GET /internships/internship_id
 View One Internship
 
 *View a single internship, which will show its attached user along with details about its status. Only available to companies or is_admin users.*
 
+FIELDS: NONE
+
 - GET /internships/
 View All Internships
 
 *Gets a list of every internship. Nested after the internships are the users they're attached to. Only accessible by companies or is_admin users.*
+
+FIELDS: NONE
 
 - PUT /internships/internship_id
 Update Internship Status
 
 *Updates the internship status. Only available to companies or is_admin users, and is an essential feature of the API.*
 
-TODO: FIELDS TO PASS IN THE BODY
+STATUSES: Refer to Create Internship Route
+POSITIONS: Refer to Create Internship Route
+
+FIELDS:
+{
+  "position_type": "Back-end", **optional**
+  "status": "Company Interested" **optional**
+}
 
 - DELETE /internships/internship_id
 Delete One Internship
 
 Allows deletion of a single internship. For when the internship is over or offer has been rejected by either party.
+
+FIELDS: NONE
 
 <a id="R6"></a>
 ## R6: An ERD for your app
