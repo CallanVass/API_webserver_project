@@ -4,7 +4,7 @@ from setup import bcrypt, db
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import create_access_token, jwt_required
 from datetime import timedelta
-from auth import authorize, company_not_allowed
+from auth import authorize, authorize_company
 from marshmallow import ValidationError
 
 # Declaring a Blueprint and setting url_prefix
@@ -30,7 +30,7 @@ def register():
             name=user_info.get("name", ""),
         )
         authorize() # Admin only
-        company_not_allowed()
+        authorize_company() 
         # Add and commit the new user to the database
         db.session.add(user)
         db.session.commit()
