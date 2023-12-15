@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from models.internship import Internship, InternshipSchema
+from models.company import Company
 from setup import db
 from flask_jwt_extended import jwt_required
 from auth import authorize
@@ -37,6 +38,7 @@ def create_internship():
             user_id = internship_info["user_id"],
             company_id = internship_info["company_id"],
             )
+        authorize(internship.company_id) # Admin and Company only
         # Add the internship and commit change to database
         db.session.add(internship)
         db.session.commit()

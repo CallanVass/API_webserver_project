@@ -4,7 +4,7 @@ from setup import bcrypt, db
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import create_access_token, jwt_required
 from datetime import timedelta
-from auth import authorize
+from auth import authorize, company_not_allowed
 from marshmallow import ValidationError
 
 # Declaring a Blueprint and setting url_prefix
@@ -14,7 +14,7 @@ users_bp = Blueprint("users", __name__, url_prefix="/users")
 @users_bp.route("/register", methods=["POST"])
 @jwt_required() # JSON Web Token must be provided for verification
 def register():
-    authorize() # Admin only
+    
     try:
         # Parse incoming POST body through the User schema 
         # (excludes id and is_admin to ensure users can't make themselves admin)
@@ -29,7 +29,8 @@ def register():
             ),
             name=user_info.get("name", ""),
         )
-
+        authorize() # Admin only
+        company_not_allowed()
         # Add and commit the new user to the database
         db.session.add(user)
         db.session.commit()

@@ -34,4 +34,12 @@ ma = Marshmallow(app)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
 
-# Error Handling
+# Global Error Handling
+
+@app.errorhandler(401)
+def unauthorized(err):
+    return {"error": str(err)}, 401
+
+@app.errorhandler(404)
+def not_found(err): 
+    return {'error': str(err)}, 404

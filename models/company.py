@@ -26,7 +26,7 @@ class CompanySchema(ma.Schema):
     # Nesting Schema under Internship upon serialization 
     internships = fields.Nested("InternshipSchema", only=["id", "status", "position_type"], many=True)
     password = fields.String(validate=And(
-        Length(min=8, error="Password must be 10 numbers in length")
+        Length(min=8, error="Password must be 8 numbers in length")
     ))
 
     # old_password field is used when resetting company passwords

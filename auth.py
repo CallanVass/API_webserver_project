@@ -19,3 +19,12 @@ def authorize(user_id=None):
     # i.e if user_id isn't passed in, they must be admin
     if not (user.is_admin or (user_id and jwt_user_id == user_id)):
         abort(401)
+
+
+def company_not_allowed(company_id=None):
+    jwt_company_id = get_jwt_identity()
+    stmt = db.select(Company).where(Company.id == jwt_company_id)
+    company = db.session.scalar(stmt)
+
+    if (company or (company_id and jwt_company_id == company_id)):
+        abort(401)

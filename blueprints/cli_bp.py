@@ -30,7 +30,7 @@ def db_seed():
         User(
             name = "Callan",
             email = "blissfulquiet@hotmail.com",
-            password = bcrypt.generate_password_hash("spam").decode("utf-8"),
+            password = bcrypt.generate_password_hash("spam1234").decode("utf-8"),
             is_admin = True
         ),
         User(
@@ -51,19 +51,19 @@ def db_seed():
     Company(
         name = "Meta",
         email = "meta@example.com",
-        password = bcrypt.generate_password_hash("spam").decode("utf-8"),
+        password = bcrypt.generate_password_hash("spam1234").decode("utf-8"),
         ph_number = "0412345679",
     ),
     Company(
         name = "Zyrtex LTD",
         email = "zyrtex@gmail.com",
-        password = bcrypt.generate_password_hash("spam").decode("utf-8"),
+        password = bcrypt.generate_password_hash("spam1234").decode("utf-8"),
         ph_number = "0412345678",
     ),
     Company(
         name = "Reddit",
         email = "reddit@reddit.com",
-        password = bcrypt.generate_password_hash("spam").decode("utf-8"),
+        password = bcrypt.generate_password_hash("spam1234").decode("utf-8"),
         ph_number = "0412345677",
     )
     ]
