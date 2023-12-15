@@ -153,7 +153,6 @@ def update_company_password(company_id):
         stmt = db.select(Company).filter_by(id=company_id)
         company = db.session.scalar(stmt)
         if company:
-            authorize() # Admin only
             # If company exists, set old_password and check current-
             # -password (given password) hash matches existing password hash
             old_password = request.json.get("old_password")

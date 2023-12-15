@@ -15,6 +15,7 @@
 10. [R10: Describe the way tasks are allocated and tracked in your project](#R10)
 11. [Email Feature](#R11)
 12. [Logging Configuration](#R12)
+13. [Bibliography](#R13)
 
 
 
@@ -96,7 +97,7 @@ Endpoints have been organised by Entities (Users, Companies, Internships)
 - GET /users/register
 Create New User
 
-*Allows is_admin users to register a new account, whether admin (staff) or not (student). This function must check whether a user is a User and also is_admin; this prevents companies from altering student information.*
+*Allows is_admin users to register a new account, whether admin (staff) or not (student). This function must check whether a user is a User and also is_admin.*
 
 FIELDS: 
 {
@@ -141,7 +142,7 @@ FIELDS: NONE
 - PUT /users/user_id
 Update User Information
 
-*This route allows user information to be updated. It's only accessible by the user admin, as companies don't need to alter user information.*
+*This route allows user information to be updated. It's only accessible by admins.*
 
 FIELDS:
 {
@@ -154,7 +155,7 @@ FIELDS:
 - PUT /users/update-password/user_id
 Update User Password 
 
-*Changes the old password (current password) to a new password. Only available for user admins to use*
+*Changes the old password (current password) to a new password. Anyone may update a password, as it requires prior knowledge of the password, which only the individual should have.*
 
 FIELDS:
 {
@@ -167,7 +168,7 @@ FIELDS:
 - DELETE /users/user_id
 Delete One User
 
-*Simply, this route deletes a user from the database, and therefore all listings. The user must have admin permissions. Companies cannot delete users.*
+*Simply, this route deletes a user from the database, and therefore all listings. The user must have admin permissions.*
 
 FIELDS: NONE
 
@@ -178,7 +179,7 @@ FIELDS: NONE
 - GET /companies/register
 Create New Company
 
-*Allows accounts to be created for companies, however this is only possible for is_admin users. Companies cannot create new companies, it must be requested of the staff at Coder Academy. This also prevents anyone from creating a company account.*
+*Allows accounts to be created for companies. Only is_admin users and companies can use. This prevents regular users from creating a company account.*
 
 FIELDS: 
 {
@@ -206,7 +207,7 @@ FIELDS:
 - GET /companies/
 View All Companies
 
-*Allows user to view a list of companies. Companies cannot view a total list, although they will be able to see when students are in the process of getting an internship. This will encourage healthy competition as well as ensure companies act quickly when selecting students.*
+*Allows user to view a list of companies. Companies can view the list of other companies too.*
 
 FIELDS: NONE
 
@@ -215,7 +216,7 @@ FIELDS: NONE
 - GET /companies/company_id
 View One Company
 
-*Allows user to view one company. Will likely be is_admin, as students nor companies need to view a single company for any reason.*
+*Allows user to view one company. Will likely be is_admin and company, as students nor companies need to view a single company for any reason.*
 
 FIELDS: NONE
 
@@ -238,7 +239,7 @@ FIELDS:
 - PUT /companies/update-password/company_id
 Update Company Password 
 
-*Changes the old password (current password) to a new password. Only available for user admins to use*
+*Changes the old password (current password) to a new password. Anyone may update a password, as it requires prior knowledge of the password, which only the individual should have.*
 
 FIELDS:
 {
@@ -251,7 +252,7 @@ FIELDS:
 - DELETE /companies/company_id
 Delete One Company
 
-*Deletes a single company from the database. Only accessible by an is_admin user.*
+*Deletes a single company from the database. Only accessible by an is_admin user and companies.*
 
 FIELDS: NONE
 
@@ -262,7 +263,7 @@ FIELDS: NONE
 - POST /internships/create
 Create Internship
 
-*Create an internship and attach it to a user. Only is_admin users will be allowed to create internships.*
+*Create an internship and attach it to a user. Only is_admin users and companies will be allowed to create internships.*
 
 VALID_STATUSES = ("Company Interested", "Student Interview Pending" , "Student Declined Interview", "Company Offered Position", "Student Accepted Offer", "Student Declined Offer", "Student Offered Employment", "Student Completed Internship")
 VALID_POSITIONS = ("Front-end", "Back-end", "Full-stack")
@@ -504,4 +505,3 @@ Shrivastava, M 2020, How to send emails using python, Medium, viewed 8 December 
 smtplib — SMTP protocol client — Python 3.8.1 documentation 2020, Python.org, viewed 9 December 2023, <https://docs.python.org/3/library/smtplib.html>.
 
 Welcome to Flask — Flask Documentation (3.0.x) 2010, flask.palletsprojects.com, viewed 1 December 2023, <https://flask.palletsprojects.com/en/3.0.x/>.
-

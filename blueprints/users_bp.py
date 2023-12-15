@@ -4,7 +4,7 @@ from setup import bcrypt, db
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import create_access_token, jwt_required
 from datetime import timedelta
-from auth import authorize, authorize_company
+from auth import authorize
 from marshmallow import ValidationError
 
 # Declaring a Blueprint and setting url_prefix
@@ -30,7 +30,6 @@ def register():
             name=user_info.get("name", ""),
         )
         authorize() # Admin only
-        authorize_company() 
         # Add and commit the new user to the database
         db.session.add(user)
         db.session.commit()
@@ -138,7 +137,6 @@ def update_user_password(user_id):
         stmt = db.select(User).filter_by(id=user_id)
         user = db.session.scalar(stmt)
         if user:
-            authorize() # Admin only
             # If user exists, set old_password and check current-
             # -password (given password) hash matches existing password hash
             old_password = request.json.get("old_password")

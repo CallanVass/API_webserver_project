@@ -38,7 +38,7 @@ def create_internship():
             user_id = internship_info["user_id"],
             company_id = internship_info["company_id"],
             )
-        authorize(internship.company_id) # Admin and Company only
+        authorize(internship.id) # Admin and Company only
         # Add the internship and commit change to database
         db.session.add(internship)
         db.session.commit()
