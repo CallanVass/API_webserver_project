@@ -54,7 +54,7 @@ def login():
     if user and bcrypt.check_password_hash(user.password, user_info["password"]):
         # Create a JWT token
         token = create_access_token(
-            identity=user.id, expires_delta=timedelta(hours=5)
+            identity=user.id, expires_delta=timedelta(minutes=25)
         ) 
         # Return token to the client
         return {

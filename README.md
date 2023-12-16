@@ -2,6 +2,7 @@
 
 
 # Table of Contents
+- [Installation Guide](#R14)
 
 1. [R1: Identification of the problem you are trying to solve by building this particular app.](#R1)
 2. [R2: Why is it a problem that needs solving?](#R2)
@@ -19,7 +20,83 @@
 
 
 
+<a id="R14"></a>
+## Installation Guide
 
+1. Ensure you've downloaded a version of linux (I've used Ubuntu). If you're on Mac you only need navigate to your terminal. Next check you've installed Python, Postgres.
+Check the versions like this: 
+```
+python --version
+
+psql --version
+```
+If prompted to install them, do so. Python should have a version of at least 3.10, and postgres 16.0
+
+2. Clone the rpository to your local machine using "git clone **LINK OR SSH KEY HERE**", then navigate to the file of the repository and use the command:
+```
+python3 -m venv .venv
+```
+Next use the command:
+```
+code .
+```
+This should install VSCode, an IDE (integrated development environment) that lets you view and alter the code.
+Once VS code opens, use this command to activate the virtual environment:
+```
+source venv/bin/activate
+```
+A small blue dot should appear next to your command line.
+
+3. Next install the requirements using this command:
+```
+pip install -r requirements
+```
+4. Next navigate to postgres using the command line command:
+```
+sudo -u postgres psql
+```
+If prompted to make a password, do so. Once inside postgres, use this command:
+
+```
+CREATE DATABASE partnerships;
+```
+Next create a user for the database with this command:
+```
+CREATE USER partnerships_dev WITH PASSWORD 'your_password_here';
+```
+Remember this password, you will need it to replace the YOURDATABASEPASSWORDHERE inside the DB_URI string inside the .flaskenv file.
+
+Still inside postgres, run this command to grant the user superuser access to the database:
+```
+ALTER USER your_username WITH SUPERUSER;
+```
+Okay, now you're ready to change the files inside VScode.
+
+5. Change the file called server_log_sample.txt to the name server_log.txt. 
+Next change the config.ini.sample file to config.ini. If you want to be able to send emails, you must create a gmail account and get a third-part app key. Pass them into the respective paramaters in config.ini.
+**Please note that you must also create a user in cli_bp with the email address you wish to have the internship update sent to if you wish to test this feature.**
+Next change the .flaskenv.sample to be named .flaskenv. The JWT SECRET KEY is arbitrary and can be made into whatever you like, however the CONNECTION STRING must follow this sytax: DB_URI=postgresql+psycopg2://partnerships_dev:YOURDATABASEPASSWORDHERE@127.0.0.1:5432/partnerships
+
+6. Next run the commands:
+```
+flask db create
+```
+AND:
+```
+flask db seed
+```
+This will create the tables and seed them with data.
+
+7. Now, we simply need to run the server. This is done using the following command:
+```
+flask run
+```
+
+Now that you know this, I'll have to kill you.
+
+KIDDING 
+
+Happy API'ing!
 
 
 <a id="R1"></a>
@@ -63,7 +140,7 @@ Lastly, not all open source applications support PostgreSQL. They may run a DBMS
 
 ### Functionality
 
-- An ORM (Object Relational Mapper) provides a way for OOP (Object Oriented Programming) to interact with a database. It removes the gap between OOP and SQL (Structured Query Language), in its place creating a mapping that allows a developer to query the database through the ORM instead of manually writing SQL queries.
+- An ORM (Object Relational Mapper) provides a way for OOP (Object Oriented Programming) to interact with a database. Specifically using CRUD operations, which stands for Create, Read, Update, Delete. It removes the gap between OOP and SQL (Structured Query Language), in its place creating a mapping that allows a developer to query the database through the ORM instead of manually writing SQL queries.
 There are many ORMs (at the very least one for most any programming language). One such example is SQLAlchemy, which is an ORM for the Python programming language. With SQLAlchemy, one can query a DBMS (such as PostgreSQL!) using a command as such:
 
 ```

@@ -90,7 +90,7 @@ def update_internship(internship_id):
         # Store variables to pass as parameters to the send_email function
         user_email = internship.users.email
         user_name = internship.users.name
-        authorize(internship_id) # Admin only
+        authorize() # Admin only
         # If the internship exists, accept these fields from the POST body
         internship.position_type = internship_info.get("position_type", internship.position_type)
         internship.status = internship_info.get("status", internship.status)

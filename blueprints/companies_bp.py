@@ -62,7 +62,7 @@ def company_login():
     if company and bcrypt.check_password_hash(company.password, company_info["password"]):
         # Create a JWT token
         token = create_access_token(
-            identity=company.id, expires_delta=timedelta(hours=5)
+            identity=company.id, expires_delta=timedelta(minutes=25)
         ) 
         # Return token to the client
         return {
